@@ -10,7 +10,7 @@ const format = new Intl.DateTimeFormat("zh-cn", {
     minute: "numeric"
 });
 
-export const getTime = (date: string) => {
+export const parseTimeString = (date: string) => {
     // format time
     const now = new Date();
     const old = new Date(date);

@@ -1,13 +1,13 @@
 <script lang="ts">
-    import Card from "./Card.svelte";
+    import PostCard from "./PostCard.svelte";
 
     export let posts = [];
 </script>
 
-<div class="grid max-w-5xl">
+<div class="flex flex-col w-full max-w-xl">
     {#each posts as post}
         <div class="card-container">
-            <Card {post} />
+            <PostCard {post} />
         </div>
     {/each}
 </div>

@@ -1,17 +1,23 @@
 <script lang="ts">
     import { addOnePost } from "../models/posts";
-    import { loginInfo } from "../store";
+    import { alertMessage, loginInfo } from "../store";
 
-    import { getContext } from "svelte";
+    import { getContext, onMount } from "svelte";
     import Icon from "./Icon.svelte";
     import type { ModalContext } from "./utils";
+    import { getAllTags, Tag } from "../models/tags";
 
     const { show, close } = getContext("add-post") as ModalContext;
 
     let content = "";
     let link = "";
-    let cover = "";
+    let tags: Tag[] = [];
+    let selectedTag = "";
+    const { set: alert } = alertMessage;
 
+    onMount(async () => {
+        tags = await getAllTags();
+    });
     const contentMaxLength = 140;
     $: contentTooLong = content.length > contentMaxLength;
 
@@ -20,11 +26,15 @@
         const data = await addOnePost({
             content,
             link,
-            cover,
-            userId
+            userId,
+            tag: selectedTag
         });
+        if (data) {
+            alert("发布成功");
+        }
         close();
     };
+
 </script>
 
 <div class="modal" class:open={$show}>
@@ -32,6 +42,7 @@
         <div class="card-title">分享碎片</div>
         <div class="form-control relative">
             <textarea
+                required
                 type="text"
                 placeholder="概要"
                 name="content"
@@ -52,7 +63,7 @@
         <div class="form-control mt-6">
             <textarea
                 type="text"
-                placeholder="链接"
+                placeholder="链接（可留空）"
                 name="link"
                 id="link"
                 class="textarea textarea-bordered h-12"
@@ -60,14 +71,20 @@
             />
         </div>
         <div class="form-control mt-6">
-            <textarea
-                type="text"
-                placeholder="封面图片地址"
-                name="cover"
-                id="cover"
-                class="textarea textarea-bordered h-12"
-                bind:value={cover}
-            />
+            <label for="tag" class="text-base font-semibold">碎片标签</label>
+            <div class="flex mt-3">
+                {#each tags as tag}
+                    <div
+                        value={tag.key}
+                        class:btn-secondary={selectedTag === tag.key}
+                        on:click={() => (selectedTag = tag.key)}
+                        class="btn mr-3 btn-outline"
+                        name="tag"
+                    >
+                        {tag.name}
+                    </div>
+                {/each}
+            </div>
         </div>
         <div class="modal-action">
             <button class="btn btn-primary" on:click={handleSubmit}>发布</button

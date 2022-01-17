@@ -19,9 +19,9 @@
         </a>
         {#each tags as tag}
             <a
-                href={`#/?tag=${tag.name}`}
+                href={`#/?tag=${tag.key}`}
                 class="btn btn-ghost btn-md text-base font-normal rounded-none"
-                class:text-primary={query.get("tag") === tag.name}
+                class:text-primary={query.get("tag") === tag.key}
             >
                 {tag.name}
             </a>

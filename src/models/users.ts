@@ -29,10 +29,14 @@ export const getCurrentUser = async () => {
     return users.length > 0 ? users[0] : null;
 };
 
+const defaultAvatar = "https://cdn.dribbble.com/users/49910/screenshots/4431133/attachments/1006784/avatar_04.png";
+
 export const addOneUser = async (username: string, password: string) => {
     const postData = {
         username,
-        password
+        password,
+        token: username,
+        avatar: defaultAvatar
     };
     const data = await fetch(`${host}/users`, {
         method: "POST",
