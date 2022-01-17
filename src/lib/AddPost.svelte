@@ -1,6 +1,6 @@
 <script lang="ts">
     import { addOnePost } from "../models/posts";
-    import { alertMessage, loginInfo } from "../store";
+    import { message, loginInfo } from "../store";
 
     import { getContext, onMount } from "svelte";
     import Icon from "./Icon.svelte";
@@ -13,7 +13,6 @@
     let link = "";
     let tags: Tag[] = [];
     let selectedTag = "";
-    const { set: alert } = alertMessage;
 
     onMount(async () => {
         tags = await getAllTags();
@@ -22,15 +21,13 @@
     $: contentTooLong = content.length > contentMaxLength;
 
     const handleSubmit = async () => {
-        const userId = $loginInfo.user.id;
         const data = await addOnePost({
             content,
             link,
-            userId,
             tag: selectedTag
-        });
+        }, $loginInfo.user);
         if (data) {
-            alert("发布成功");
+            message.success("发布成功");
         }
         close();
     };
@@ -76,9 +73,9 @@
                 {#each tags as tag}
                     <div
                         value={tag.key}
-                        class:btn-secondary={selectedTag === tag.key}
+                        class:btn-outline={selectedTag !== tag.key}
                         on:click={() => (selectedTag = tag.key)}
-                        class="btn mr-3 btn-outline"
+                        class="btn mr-3"
                         name="tag"
                     >
                         {tag.name}

@@ -3,15 +3,14 @@
 
     import { getUserByUsername } from "../models/users";
 
-    import { alertMessage, loginInfo } from "../store";
+    import { message, loginInfo } from "../store";
     let username: string, password: string;
-
     const isFormLegal = () => {
         let legal = false;
         if (!username) {
-            alertMessage.set("请输入用户名");
+            alert("请输入用户名");
         } else if (!password) {
-            alertMessage.set("请输入密码");
+            message.error("请输入密码");
         } else {
             legal = true;
         }
@@ -24,7 +23,7 @@
         }
         const user = await getUserByUsername(username);
         if (!user || user.password !== password) {
-            alertMessage.set("账户或密码错误");
+            message.error("账户或密码错误");
         } else {
             loginInfo.login(user);
             push("/");

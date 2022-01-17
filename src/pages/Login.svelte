@@ -1,5 +1,4 @@
 <script lang="ts">
-    import Alert from "../lib/Alert.svelte";
     import LoginForm from "../lib/LoginForm.svelte";
 
     const title = "Soo Share";
@@ -9,7 +8,6 @@
 <div
     class="bg-base-200 align-middle justify-center overflow-hidden relative h-full"
 >
-    <Alert />
     <div
         class="flex-col justify-center hero-content lg:flex-row h-full max-w-full lg:justify-evenly"
     >
@@ -26,5 +24,3 @@
         </div>
     </div>
 </div>
-
-

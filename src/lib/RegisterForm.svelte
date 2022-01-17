@@ -3,17 +3,17 @@
 
     import { addOneUser } from "../models/users";
 
-    import { alertMessage, loginInfo } from "../store";
+    import { message, loginInfo } from "../store";
     let username: string, password: string, repeatedPassword: string;
 
     const isFormLegal = () => {
         let legal = false;
         if (!username) {
-            alertMessage.set("请输入用户名");
+            message.error("请输入用户名");
         } else if (!password) {
-            alertMessage.set("请输入密码");
+            message.error("请输入密码");
         } else if (password !== repeatedPassword) {
-            alertMessage.set("密码重复错误");
+            message.error("密码重复错误");
         } else {
             legal = true;
         }
@@ -26,7 +26,7 @@
         }
         const user = await addOneUser(username, password);
         if (!user) {
-            alertMessage.set("注册失败");
+            message.error("注册失败");
         } else {
             loginInfo.login(user);
             push("/");

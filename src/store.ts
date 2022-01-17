@@ -2,25 +2,33 @@ import { writable } from 'svelte/store';
 
 import type { User } from "./models/users";
 
-const createAlertMessage = () => {
+const createMessage = () => {
     const { subscribe, set } = writable({
-        message: ""
+        message: "",
+        type: ""
     });
 
     return {
         subscribe,
-        set: (message: string) => set({ message })
+        success: (message: string) => set({ message, type: "success" }),
+        warning: (message: string) => set({ message, type: "warning" }),
+        info: (message: string) => set({ message, type: "info" }),
+        error: (message: string) => set({ message, type: "error" })
     };
 };
 
-export const alertMessage = createAlertMessage();
+export const message = createMessage();
 
 export const tokenId = "soo-token";
 
 const createLoginInfo = () => {
     const token = localStorage.getItem(tokenId);
 
-    const { set, subscribe } = writable({
+    const { set, subscribe } = writable<{
+        user: User;
+        token: string;
+        isLogin: boolean;
+    }>({
         user: null,
         token: token || "",
         isLogin: false
@@ -41,8 +49,8 @@ const createLoginInfo = () => {
             user: null,
             isLogin: false,
             token: ""
-        })
-    }
+        });
+    };
 
     return {
         login,

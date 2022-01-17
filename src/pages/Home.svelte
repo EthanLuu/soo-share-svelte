@@ -6,12 +6,13 @@
     import NavBar from "../lib/NavBar.svelte";
     import { getAllTags, Tag } from "../models/tags";
     import { querystring } from "svelte-spa-router";
+    import AddPost from "../lib/AddPost.svelte";
+    import { createModalContext } from "../lib/utils";
 
     let posts: Post[] = [];
     let allPosts: Post[] = [];
     let tags: Tag[] = [];
     let loading = true;
-
     onMount(async () => {
         allPosts = await getAllPosts();
         tags = await getAllTags();
@@ -28,13 +29,11 @@
     }
 </script>
 
-<div class="flex items-center justify-center flex-col bg-base-200 h-full">
-    <NavBar {tags} />
-    <div class="container py-4 flex justify-center h-full">
-        {#if loading}
-            <Loading />
-        {:else}
-            <PostsList {posts} />
-        {/if}
-    </div>
+<NavBar {tags} />
+<div class="container py-4 flex justify-center h-full">
+    {#if loading}
+        <Loading />
+    {:else}
+        <PostsList {posts} />
+    {/if}
 </div>
