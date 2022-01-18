@@ -61,3 +61,7 @@ export const createModalContext = (
 export const getModalContext = (key: string) => {
     return getContext(key) as ModalContext;
 };
+
+export const isEnter = (e: KeyboardEvent, fn: any) => {
+    e.key === "Enter" && fn();
+};

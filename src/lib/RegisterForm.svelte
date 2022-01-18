@@ -4,12 +4,18 @@
     import { addOneUser } from "../models/users";
 
     import { message, loginInfo } from "../store";
-    let username: string, password: string, repeatedPassword: string;
+    import { isEnter } from "./utils";
+    let username: string,
+        password: string,
+        repeatedPassword: string,
+        nickname: string;
 
     const isFormLegal = () => {
         let legal = false;
         if (!username) {
             message.error("请输入用户名");
+        } else if (!nickname) {
+            message.error("请输入昵称");
         } else if (!password) {
             message.error("请输入密码");
         } else if (password !== repeatedPassword) {
@@ -24,7 +30,7 @@
         if (!isFormLegal()) {
             return;
         }
-        const user = await addOneUser(username, password);
+        const user = await addOneUser(username, password, nickname);
         if (!user) {
             message.error("注册失败");
         } else {
@@ -36,12 +42,23 @@
 
 <div class="form-control">
     <input
+        required
         type="text"
         placeholder="用户名"
         name="username"
         id="username"
         class="input input-bordered"
         bind:value={username}
+    />
+</div>
+<div class="form-control mt-6">
+    <input
+        type="text"
+        placeholder="昵称"
+        name="nickname"
+        id="nickname"
+        class="input input-bordered"
+        bind:value={nickname}
     />
 </div>
 <div class="form-control mt-6">
@@ -62,6 +79,7 @@
         id="repeatedPassword"
         class="input input-bordered"
         bind:value={repeatedPassword}
+        on:keypress={(e) => isEnter(e, register)}
     />
 </div>
 <div class="form-control mt-6">

@@ -15,8 +15,6 @@
             title: "确认删除吗？"
         });
     };
-
-    const { user } = $loginInfo;
 </script>
 
 <div class="dropdown dropdown-end">
@@ -31,7 +29,7 @@
         tabindex="0"
         class="shadow menu dropdown-content bg-base-100 w-20 border"
     >
-        {#if user.id === post.userId}
+        {#if $loginInfo.user?.id === post?.userId}
             <button
                 class="px-2 py-2 flex w-full items-center justify-around hover:bg-base-200"
             >

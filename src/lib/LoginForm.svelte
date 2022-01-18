@@ -4,6 +4,7 @@
     import { getUserByUsername } from "../models/users";
 
     import { message, loginInfo } from "../store";
+    import { isEnter } from "./utils";
     let username: string, password: string;
     const isFormLegal = () => {
         let legal = false;
@@ -49,6 +50,7 @@
         id="password"
         class="input input-bordered"
         bind:value={password}
+        on:keypress={(e) => isEnter(e, login)}
     />
 </div>
 <div class="form-control mt-6">

@@ -28,7 +28,7 @@
                     >
                         <img src={user.avatar} alt="avatar" />
                     </div>
-                    <div class="card-title mt-2">{user.username}</div>
+                    <div class="card-title mt-2">{user.nickname}</div>
                 </div>
             </div>
             <button class="btn btn-outline absolute right-4 top-4"

@@ -69,7 +69,7 @@ const createCurrentPosts = () => {
 
     const { set, subscribe } = posts;
 
-    const add = (post: Post) => posts.update((oldPosts) => [...oldPosts, post]);
+    const add = (post: Post) => posts.update((oldPosts) => [post, ...oldPosts]);
     const remove = (id: number) =>
         posts.update((oldPosts) => oldPosts.filter((post) => post.id !== id));
 

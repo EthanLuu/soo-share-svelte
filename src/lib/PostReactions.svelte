@@ -10,11 +10,17 @@
     let like: Like;
     let likeCount = 0;
     onMount(async () => {
-        like = await checkLiked(post, user);
         likeCount = await countLikes(post);
+        if (!user) {
+            return;
+        }
+        like = await checkLiked(post, user);
         liked = !!like;
     });
     const handleLike = async () => {
+        if (!user) {
+            return;
+        }
         liked = !liked;
         like = await toggleLike(post, user, like, liked);
         if (like) {

@@ -6,6 +6,7 @@ export interface User {
     id: number;
     username: string;
     password: string;
+    nickname: string;
     avatar?: string;
     token?: string;
 }
@@ -31,10 +32,11 @@ export const getCurrentUser = async () => {
 
 const defaultAvatar = "https://cdn.dribbble.com/users/49910/screenshots/4431133/attachments/1006784/avatar_04.png";
 
-export const addOneUser = async (username: string, password: string) => {
+export const addOneUser = async (username: string, password: string, nickname: string) => {
     const postData = {
         username,
         password,
+        nickname,
         token: username,
         avatar: defaultAvatar
     };

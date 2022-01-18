@@ -28,7 +28,7 @@ export const addOnePost = async (post: Partial<Post>, user: User) => {
     post.date = new Date().toUTCString();
     post.userId = user.id;
     post.userAvatar = user.avatar;
-    post.userName = user.username;
+    post.userName = user.nickname;
     const response = await fetch(`${host}/posts`, {
         headers: {
             "Content-Type": "application/json"
@@ -37,7 +37,7 @@ export const addOnePost = async (post: Partial<Post>, user: User) => {
         body: JSON.stringify(post)
     });
     const data = await response.json();
-    return data;
+    return data as Post;
 };
 
 export const getPostsByUserId = async (userId: number) => {

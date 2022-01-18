@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { currentPosts } from "../store";
     import { addOnePost } from "../models/posts";
     import { message, loginInfo } from "../store";
 
@@ -30,6 +31,7 @@
             $loginInfo.user
         );
         if (data) {
+            currentPosts.add(data);
             message.success("发布成功");
         }
         close();
