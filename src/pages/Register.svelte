@@ -1,5 +1,5 @@
 <script lang="ts">
-    import RegisterForm from "../lib/RegisterForm.svelte";
+    import RegisterForm from "../lib/forms/RegisterForm.svelte";
 
     const title = "Soo Share";
     const info = "分享最新的，发现最好的";

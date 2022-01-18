@@ -6,6 +6,8 @@
     import PostsList from "../lib/PostsList.svelte";
     import { currentPosts } from "../store";
     import { onMount } from "svelte";
+    import { getModalContext } from "../lib/utils";
+    import EditInfoForm from "../lib/forms/EditInfoForm.svelte";
     export let params: { id?: number } = {};
     let user: User;
     let loading = true;
@@ -14,6 +16,8 @@
         currentPosts.set(await getPostsByUserId(user.id));
         loading = false;
     });
+
+    const { open } = getModalContext("modal");
 </script>
 
 <div>
@@ -31,7 +35,9 @@
                     <div class="card-title mt-2">{user.nickname}</div>
                 </div>
             </div>
-            <button class="btn btn-outline absolute right-4 top-4"
+            <button
+                class="btn btn-outline absolute right-4 top-4"
+                on:click={() => open(EditInfoForm, { user })}
                 >编辑个人资料</button
             >
             <div class="flex justify-center">

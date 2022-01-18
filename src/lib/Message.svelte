@@ -32,7 +32,7 @@
         class:alert-info={type === "info"}
         class:alert-warning={type === "warning"}
         class:alert-success={type === "success"}
-        class="bg-opacity-30 alert top-1 fixed left-1/2 -translate-x-1/2 z-10 shadow-lg"
+        class="bg-opacity-30 alert top-1 fixed left-1/2 -translate-x-1/2 z-50 shadow-lg"
     >
         <div class="flex-1">
             <Icon

@@ -1,12 +1,12 @@
 <script lang="ts">
-    import { currentPosts } from "../store";
-    import { addOnePost } from "../models/posts";
-    import { message, loginInfo } from "../store";
+    import { currentPosts } from "../../store";
+    import { addOnePost } from "../../models/posts";
+    import { message, loginInfo } from "../../store";
 
     import { getContext, onMount } from "svelte";
-    import Icon from "./Icon.svelte";
-    import type { ModalContext } from "./utils";
-    import { getAllTags, Tag } from "../models/tags";
+    import Icon from "../Icon.svelte";
+    import type { ModalContext } from "../utils";
+    import { getAllTags, Tag } from "../../models/tags";
 
     const { close } = getContext("modal") as ModalContext;
 

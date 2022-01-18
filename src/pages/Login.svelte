@@ -1,5 +1,5 @@
 <script lang="ts">
-    import LoginForm from "../lib/LoginForm.svelte";
+    import LoginForm from "../lib/forms/LoginForm.svelte";
 
     const title = "Soo Share";
     const info = "分享最新的，收获最好的";

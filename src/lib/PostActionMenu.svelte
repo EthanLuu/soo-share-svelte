@@ -20,7 +20,7 @@
 <div class="dropdown dropdown-end">
     <div
         tabindex="0"
-        class="cursor-pointer hover:bg-base-200 rounded-full h-6 w-6 flex items-center justify-center"
+        class="cursor-pointer hover:bg-base-300 rounded-full h-6 w-6 flex items-center justify-center"
     >
         <Icon name="dots-horizontal" class="stroke-current" />
     </div>
@@ -31,7 +31,7 @@
     >
         {#if $loginInfo.user?.id === post?.userId}
             <button
-                class="px-2 py-2 flex w-full items-center justify-around hover:bg-base-200"
+                class="px-2 py-2 flex w-full items-center justify-around hover:bg-base-300"
             >
                 <Icon class="stroke-current" name="write" />
                 <span>编辑</span>

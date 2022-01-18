@@ -1,10 +1,10 @@
 <script lang="ts">
     import { push } from "svelte-spa-router";
 
-    import { getUserByUsername } from "../models/users";
+    import { getUserByUsername } from "../../models/users";
 
-    import { message, loginInfo } from "../store";
-    import { isEnter } from "./utils";
+    import { message, loginInfo } from "../../store";
+    import { isEnter } from "../utils";
     let username: string, password: string;
     const isFormLegal = () => {
         let legal = false;

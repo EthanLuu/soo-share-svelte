@@ -1,7 +1,7 @@
 <script lang="ts">
     import { getContext } from "svelte";
     import { loginInfo } from "../store";
-    import CreatePostForm from "./CreatePostForm.svelte";
+    import CreatePostForm from "./forms/CreatePostForm.svelte";
     import Icon from "./Icon.svelte";
     import type { ModalContext } from "./utils";
     const { logout } = loginInfo;
