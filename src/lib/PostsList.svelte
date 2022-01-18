@@ -6,14 +6,8 @@
 
 <div class="flex flex-col w-full max-w-xl">
     {#each posts as post}
-        <div class="card-container">
+        <div class="-mb-px">
             <PostCard {post} />
         </div>
     {/each}
 </div>
-
-<style>
-    .card-container {
-        margin-bottom: -1px;
-    }
-</style>

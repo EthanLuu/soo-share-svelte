@@ -1,10 +1,11 @@
 <script lang="ts">
     import { getContext } from "svelte";
-
     import { loginInfo } from "../store";
+    import CreatePostForm from "./CreatePostForm.svelte";
     import Icon from "./Icon.svelte";
+    import type { ModalContext } from "./utils";
     const { logout } = loginInfo;
-    const { open } = getContext("add-post");
+    const { open } = getContext("modal") as ModalContext;
 </script>
 
 <div>
@@ -29,7 +30,7 @@
             </a>
             <div
                 class="flex items-center px-4 py-2 hover:bg-base-300 cursor-pointer"
-                on:click={open}
+                on:click={() => open(CreatePostForm)}
             >
                 <Icon name="write" class="stroke-current mr-2" />
                 <span class="text-sm">发布碎片</span>

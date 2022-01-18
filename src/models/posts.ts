@@ -47,3 +47,11 @@ export const getPostsByUserId = async (userId: number) => {
     const posts = await response.json();
     return posts as Post[];
 };
+
+export const deletePostById = async (id: number) => {
+    const response = await fetch(`${host}/posts/${id}`, {
+        method: "DELETE"
+    });
+    const data = await response.json();
+    return data;
+};
