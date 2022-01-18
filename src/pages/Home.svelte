@@ -6,10 +6,8 @@
     import NavBar from "../lib/NavBar.svelte";
     import { getAllTags, Tag } from "../models/tags";
     import { querystring } from "svelte-spa-router";
-    import AddPost from "../lib/AddPost.svelte";
-    import { createModalContext } from "../lib/utils";
+    import { currentPosts } from "../store";
 
-    let posts: Post[] = [];
     let allPosts: Post[] = [];
     let tags: Tag[] = [];
     let loading = true;
@@ -21,9 +19,9 @@
     $: params = new URLSearchParams($querystring);
     $: {
         if (params.has("tag")) {
-            posts = filterPostsByTag(allPosts, params.get("tag"));
+            currentPosts.set(filterPostsByTag(allPosts, params.get("tag")));
         } else {
-            posts = allPosts;
+            currentPosts.set(allPosts);
         }
         loading = false;
     }
@@ -34,6 +32,6 @@
     {#if loading}
         <Loading />
     {:else}
-        <PostsList {posts} />
+        <PostsList posts={$currentPosts} />
     {/if}
 </div>

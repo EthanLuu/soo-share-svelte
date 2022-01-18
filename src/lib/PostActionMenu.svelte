@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { loginInfo } from "../store";
+    import { currentPosts, loginInfo } from "../store";
     import { deletePostById, Post } from "../models/posts";
     import Confirm from "./Confirm.svelte";
     import Icon from "./Icon.svelte";
@@ -8,7 +8,10 @@
     const modalContext = getModalContext("modal");
     const handleDelete = () => {
         modalContext.open(Confirm, {
-            fn: () => deletePostById(post.id),
+            fn: () => {
+                deletePostById(post.id);
+                currentPosts.remove(post.id);
+            },
             title: "确认删除吗？"
         });
     };

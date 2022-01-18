@@ -1,5 +1,7 @@
 import { writable } from 'svelte/store';
 
+import type { Post } from "./models/posts";
+
 import type { User } from "./models/users";
 
 const createMessage = () => {
@@ -61,3 +63,22 @@ const createLoginInfo = () => {
 };
 
 export const loginInfo = createLoginInfo();
+
+const createCurrentPosts = () => {
+    const posts = writable([] as Post[]);
+
+    const { set, subscribe } = posts;
+
+    const add = (post: Post) => posts.update((oldPosts) => [...oldPosts, post]);
+    const remove = (id: number) =>
+        posts.update((oldPosts) => oldPosts.filter((post) => post.id !== id));
+
+    return {
+        add,
+        remove,
+        subscribe,
+        set
+    };
+};
+
+export const currentPosts = createCurrentPosts();
