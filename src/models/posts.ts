@@ -55,3 +55,19 @@ export const deletePostById = async (id: number) => {
     const data = await response.json();
     return data;
 };
+
+export const reportPostById = async (id: number) => {
+    return id;
+}
+
+export const editPost = async (post: Post) => {
+    const response = await fetch(`${host}/posts/${post.id}`, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(post)
+    });
+    const data = await response.json();
+    return data;
+};

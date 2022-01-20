@@ -101,36 +101,6 @@
       "id": 11
     },
     {
-      "content": "dddd",
-      "link": "",
-      "tag": "project",
-      "date": "Tue, 18 Jan 2022 02:54:28 GMT",
-      "userId": 4,
-      "userAvatar": "https://cdn.dribbble.com/users/49910/screenshots/4431133/attachments/1006784/avatar_04.png",
-      "userName": "Test User",
-      "id": 20
-    },
-    {
-      "content": "test",
-      "link": "123",
-      "tag": "project",
-      "date": "Tue, 18 Jan 2022 02:55:46 GMT",
-      "userId": 4,
-      "userAvatar": "https://cdn.dribbble.com/users/49910/screenshots/4431133/attachments/1006784/avatar_04.png",
-      "userName": "Test User",
-      "id": 21
-    },
-    {
-      "content": "233",
-      "link": "",
-      "tag": "contest",
-      "date": "Tue, 18 Jan 2022 03:07:28 GMT",
-      "userId": 4,
-      "userAvatar": "https://cdn.dribbble.com/users/49910/screenshots/4431133/attachments/1006784/avatar_04.png",
-      "userName": "Test User",
-      "id": 22
-    },
-    {
       "content": "4444",
       "link": "4",
       "tag": "contest",
@@ -139,16 +109,6 @@
       "userAvatar": "https://cdn.dribbble.com/users/49910/screenshots/4431133/attachments/1006784/avatar_04.png",
       "userName": "Test User",
       "id": 23
-    },
-    {
-      "content": "yeah",
-      "link": "",
-      "tag": "contest",
-      "date": "Tue, 18 Jan 2022 03:10:24 GMT",
-      "userId": 4,
-      "userAvatar": "https://cdn.dribbble.com/users/49910/screenshots/4431133/attachments/1006784/avatar_04.png",
-      "userName": "Test User",
-      "id": 24
     }
   ],
   "users": [
@@ -179,7 +139,7 @@
     {
       "username": "test",
       "password": "123",
-      "nickname": "2222Test User",
+      "nickname": "Test User",
       "token": "test",
       "avatar": "https://cdn.dribbble.com/users/49910/screenshots/4431133/attachments/1006784/avatar_04.png",
       "id": 4
