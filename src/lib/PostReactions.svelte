@@ -6,26 +6,21 @@
     import Icon from "./Icon.svelte";
     export let post: Post;
     const { user } = $loginInfo;
-    let liked: boolean = false;
     let like: Like;
     let likeCount = 0;
     onMount(async () => {
-        likeCount = await countLikes(post);
+        likeCount = post.likeInfo.length;
         if (!user) {
             return;
         }
-        like = await checkLiked(post, user);
-        liked = !!like;
+        like = post.likeInfo.find((l) => l.userId === user._id);
     });
     const handleLike = async () => {
         if (!user) {
             return;
         }
-        liked = !liked;
-        like = await toggleLike(post, user, like, liked);
-        if (like) {
-            liked ? (likeCount += 1) : (likeCount -= 1);
-        }
+        like = await toggleLike(post, user, like);
+        like ? (likeCount += 1) : (likeCount -= 1);
     };
 </script>
 
@@ -39,7 +34,7 @@
             width="18"
             name="heart"
             class={`cursor-pointer mr-2 ${
-                liked ? "fill-red-600" : "hover:text-red-600 stroke-current "
+                !!like ? "fill-red-600" : "hover:text-red-600 stroke-current "
             }`}
         />
         <span>{likeCount}</span>

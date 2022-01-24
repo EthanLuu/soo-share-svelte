@@ -54,11 +54,14 @@ const createLoginInfo = () => {
         });
     };
 
+    const getToken = () => localStorage.getItem(tokenId);
+
     return {
         login,
         logout,
         subscribe,
-        set
+        set,
+        getToken
     };
 };
 
@@ -70,11 +73,11 @@ const createCurrentPosts = () => {
     const { set, subscribe } = posts;
 
     const add = (post: Post) => posts.update((oldPosts) => [post, ...oldPosts]);
-    const remove = (id: number) =>
-        posts.update((oldPosts) => oldPosts.filter((post) => post.id !== id));
+    const remove = (id: string) =>
+        posts.update((oldPosts) => oldPosts.filter((post) => post._id !== id));
     const edit = (post: Post) =>
         posts.update((oldPosts) => {
-            oldPosts[oldPosts.findIndex((p) => p.id === post.id)] = post;
+            oldPosts[oldPosts.findIndex((p) => p._id === post._id)] = post;
             return oldPosts;
         });
 

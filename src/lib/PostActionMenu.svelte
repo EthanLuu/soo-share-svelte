@@ -10,9 +10,9 @@
     const handleDelete = () => {
         modalContext.open(Confirm, {
             fn: async () => {
-                const data = await deletePostById(post.id);
+                const data = await deletePostById(post._id);
                 if (data) {
-                    currentPosts.remove(post.id);
+                    currentPosts.remove(post._id);
                     message.success("删除成功");
                 }
             },
@@ -29,7 +29,7 @@
     const handleReport = () => {
         modalContext.open(Confirm, {
             fn: async () => {
-                const data = await reportPostById(post.id);
+                const data = await reportPostById(post._id);
                 if (data) {
                     message.success("举报成功");
                 }
@@ -51,7 +51,7 @@
         tabindex="0"
         class="shadow menu dropdown-content bg-base-100 w-20 border"
     >
-        {#if $loginInfo.user?.id === post?.userId}
+        {#if $loginInfo.user?._id === post?.userInfo._id}
             <button
                 class="px-2 py-2 flex w-full items-center justify-around hover:bg-base-300"
                 on:click={handleEdit}

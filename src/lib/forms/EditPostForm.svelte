@@ -22,14 +22,15 @@
     $: contentTooLong = content.length > contentMaxLength;
 
     const handleSubmit = async () => {
-        const data = await editPost({
+        const newPost = {
             ...post,
             content,
             link,
             tag: selectedTag
-        });
+        };
+        const data = await editPost(newPost);
         if (data) {
-            currentPosts.edit(data);
+            currentPosts.edit(newPost);
             message.success("编辑成功");
         }
         close();

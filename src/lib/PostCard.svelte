@@ -13,9 +13,9 @@
 >
     <div class="card-body p-4 pb-2 flex justify-between w-full">
         <div class="mb-4 flex">
-            <a href="/#/user/{post.userId}">
+            <a href="/#/user/{post.userName}">
                 <img
-                    src={post.userAvatar}
+                    src={post.userInfo.avatar}
                     alt="avatar"
                     class="h-12 w-12 rounded-full mr-3"
                 />

@@ -1,49 +1,47 @@
+import { loginInfo } from '../store';
+import { host } from './configs';
+
 import type { Post } from "./posts";
 import type { User } from "./users";
 
-const host = "http://localhost:2333";
-
 export interface Like {
-    id: number;
-    userId: number;
-    postId: number;
+    _id: string;
+    userId: string;
+    postId: string;
 }
 
-export const checkLiked = async (post: Post, user: User) => {
-    const response = await fetch(
-        `${host}/likes?userId=${user.id}&postId=${post.id}`
-    );
-    const data = await response.json();
-    return data?.[0] as Like;
+export const checkLiked = (post: Post, user: User) => {
+    return post.likeInfo.findIndex((l) => l.userId === user._id) >= 0;
 };
 
 export const countLikes = async (post: Post) => {
-    const response = await fetch(`${host}/likes?postId=${post.id}`);
+    const response = await fetch(`${host}/likes?postId=${post._id}`);
     const data = await response.json();
     return data.length;
 };
 
-export const toggleLike = async (
-    post: Post,
-    user: User,
-    like: Like,
-    liked: boolean
-) => {
+export const toggleLike = async (post: Post, user: User, like?: Like) => {
     let response: Response;
-    if (liked) {
-        const body = JSON.stringify({ userId: user.id, postId: post.id });
+    if (!like) {
+        const body = JSON.stringify({ userId: user._id, postId: post._id });
         response = await fetch(`${host}/likes`, {
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                authorization: loginInfo.getToken()
             },
             method: "POST",
             body
         });
+        const data = await response.json();
+        return data;
     } else {
-        response = await fetch(`${host}/likes/${like.id}`, {
-            method: "DELETE"
+        response = await fetch(`${host}/likes/${like._id}`, {
+            method: "DELETE",
+            headers: {
+                authorization: loginInfo.getToken()
+            }
         });
+        const data = await response.json();
+        return !data;
     }
-    const data = await response.json();
-    return data;
 };

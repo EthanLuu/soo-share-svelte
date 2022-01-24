@@ -5,7 +5,7 @@
 </script>
 
 <div class="flex flex-col w-full max-w-xl">
-    {#each posts as post (post.id)}
+    {#each posts as post (post._id)}
         <div class="-mb-px">
             <PostCard {post} />
         </div>

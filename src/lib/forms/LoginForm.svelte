@@ -1,7 +1,7 @@
 <script lang="ts">
     import { push } from "svelte-spa-router";
 
-    import { getUserByUsername } from "../../models/users";
+    import { loginByPassword } from "../../models/users";
 
     import { message, loginInfo } from "../../store";
     import { isEnter } from "../utils";
@@ -22,8 +22,8 @@
         if (!isFormLegal()) {
             return;
         }
-        const user = await getUserByUsername(username);
-        if (!user || user.password !== password) {
+        const user = await loginByPassword(username, password);
+        if (!user) {
             message.error("账户或密码错误");
         } else {
             loginInfo.login(user);

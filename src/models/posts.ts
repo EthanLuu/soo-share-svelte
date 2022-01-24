@@ -1,23 +1,32 @@
+import { loginInfo } from '../store';
+import { host } from './configs';
+
+import type { Like } from "./likes";
+
 import type { User } from "./users";
 
-const host = "http://localhost:2333";
-
 export interface Post {
-    id: number;
+    _id: string;
     date: string;
     content: string;
     link?: string;
     cover?: string;
-    userId: number;
     userName: string;
-    userAvatar: string;
     tag: string;
+    userInfo?: User;
+    likeInfo?: Like[];
 }
 
 export const getAllPosts = async () => {
-    const response = await fetch(`${host}/posts?_sort=date&_order=desc`);
-    const posts = await response.json();
-    return posts as Post[];
+    const response = await fetch(`${host}/posts`);
+    const data = await response.json();
+    return data as Post[];
+};
+
+export const getPostsByTag = async (tag: string) => {
+    const response = await fetch(`${host}/posts?tag=${tag}`);
+    const data = await response.json();
+    return data as Post[];
 };
 
 export const filterPostsByTag = (posts: Post[], tag: string) => {
@@ -25,13 +34,11 @@ export const filterPostsByTag = (posts: Post[], tag: string) => {
 };
 
 export const addOnePost = async (post: Partial<Post>, user: User) => {
-    post.date = new Date().toUTCString();
-    post.userId = user.id;
-    post.userAvatar = user.avatar;
-    post.userName = user.nickname;
+    post.userName = user.username;
     const response = await fetch(`${host}/posts`, {
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            authorization: loginInfo.getToken()
         },
         method: "POST",
         body: JSON.stringify(post)
@@ -40,34 +47,40 @@ export const addOnePost = async (post: Partial<Post>, user: User) => {
     return data as Post;
 };
 
-export const getPostsByUserId = async (userId: number) => {
-    const response = await fetch(
-        `${host}/posts?userId=${userId}&_sort=date&_order=desc`
-    );
+export const getPostsByUserId = async (userId: string) => {
+    const response = await fetch(`${host}/posts?userId=${userId}`);
     const posts = await response.json();
     return posts as Post[];
 };
 
-export const deletePostById = async (id: number) => {
+export const deletePostById = async (id: string) => {
     const response = await fetch(`${host}/posts/${id}`, {
-        method: "DELETE"
+        method: "DELETE",
+        headers: {
+            authorization: loginInfo.getToken()
+        }
     });
     const data = await response.json();
     return data;
 };
 
-export const reportPostById = async (id: number) => {
+export const reportPostById = async (id: string) => {
     return id;
-}
+};
 
 export const editPost = async (post: Post) => {
-    const response = await fetch(`${host}/posts/${post.id}`, {
-        method: "PUT",
+    const response = await fetch(`${host}/posts/${post._id}`, {
+        method: "PATCH",
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            authorization: loginInfo.getToken()
         },
-        body: JSON.stringify(post)
+        body: JSON.stringify({
+            content: post.content,
+            link: post.link,
+            tag: post.tag
+        })
     });
     const data = await response.json();
-    return data;
+    return data ? post : null;
 };

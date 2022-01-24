@@ -1,9 +1,8 @@
 import { tokenId } from '../store';
-
-const host = "http://localhost:2333";
+import { host } from './configs';
 
 export interface User {
-    id: number;
+    _id: string;
     username: string;
     password: string;
     nickname: string;
@@ -11,23 +10,45 @@ export interface User {
     token?: string;
 }
 
-export const getUserById = async (id: number) => {
+export const getUserById = async (id: string) => {
     const data = await fetch(`${host}/users/${id}`);
     const user = await data.json();
     return user as User;
 };
 
 export const getUserByUsername = async (username: string) => {
-    const data = await fetch(`${host}/users?username=${username}`);
-    const users = (await data.json()) as User[];
-    return users.length > 0 ? users[0] : null;
+    const data = await fetch(`${host}/users/${username}`);
+    const user = await data.json();
+    return user as User;
 };
 
-export const getCurrentUser = async () => {
+export const loginByPassword = async (username: string, password: string) => {
+    const response = await fetch(`${host}/users/login`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ username, password })
+    });
+    if (!response.ok) {
+        return false;
+    }
+    const data = await response.json();
+    return data;
+};
+
+export const loginByToken = async () => {
     const token = localStorage.getItem(tokenId);
-    const data = await fetch(`${host}/users?token=${token}`);
-    const users = (await data.json()) as User[];
-    return users.length > 0 ? users[0] : null;
+    if (!token) {
+        return null;
+    }
+    const data = await fetch(`${host}/users/login`, {
+        method: "POST",
+        headers: {
+            authorization: token
+        }
+    });
+    return data ? data.json() : null;
 };
 
 const defaultAvatar =
@@ -42,10 +63,9 @@ export const addOneUser = async (
         username,
         password,
         nickname,
-        token: username,
         avatar: defaultAvatar
     };
-    const response = await fetch(`${host}/users`, {
+    const response = await fetch(`${host}/users/register`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
@@ -58,7 +78,7 @@ export const addOneUser = async (
 
 export const editUserInfo = async (user: User, props: any) => {
     const userInfo = { ...user, ...props };
-    const response = await fetch(`${host}/users/${user.id}`, {
+    const response = await fetch(`${host}/users/${user._id}`, {
         method: "PUT",
         headers: {
             "Content-Type": "application/json"

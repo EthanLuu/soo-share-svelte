@@ -8,7 +8,7 @@
     import Register from "./pages/Register.svelte";
     import Login from "./pages/Login.svelte";
     import { onMount } from "svelte";
-    import { getCurrentUser } from "./models/users";
+    import { loginByToken } from "./models/users";
     import { loginInfo } from "./store";
     import { createModalContext } from "./lib/utils";
     import User from "./pages/User.svelte";
@@ -19,12 +19,12 @@
         "/recommend": Recommend,
         "/register": Register,
         "/login": Login,
-        "/user/:id": User,
+        "/user/:username": User,
         "*": NotFound
     };
     createModalContext("modal", false);
     onMount(async () => {
-        const user = await getCurrentUser();
+        const user = await loginByToken();
         if (user) {
             loginInfo.login(user);
         }
@@ -35,7 +35,7 @@
 <main class="flex-1">
     <Modal />
     <Message />
-    <div class="h-full bg-base-200">
+    <div class="h-full bg-base-200 flex flex-col">
         <Router {routes} />
     </div>
 </main>

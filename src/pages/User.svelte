@@ -1,5 +1,5 @@
 <script lang="ts">
-    import type { User } from "../models/users";
+    import { getUserByUsername, User } from "../models/users";
     import { getPostsByUserId } from "../models/posts";
     import { getUserById } from "../models/users";
     import Loading from "../lib/Loading.svelte";
@@ -8,12 +8,12 @@
     import { onMount } from "svelte";
     import { getModalContext } from "../lib/utils";
     import EditInfoForm from "../lib/forms/EditInfoForm.svelte";
-    export let params: { id?: number } = {};
+    export let params: { username?: string } = {};
     let user: User;
     let loading = true;
     onMount(async () => {
-        user = await getUserById(params.id);
-        currentPosts.set(await getPostsByUserId(user.id));
+        user = await getUserByUsername(params.username);
+        currentPosts.set(await getPostsByUserId(user._id));
         loading = false;
     });
 
