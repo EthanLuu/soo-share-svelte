@@ -1,10 +1,9 @@
 <script lang="ts">
     import { getUserByUsername, User } from "../models/users";
-    import { getPostsByUserId } from "../models/posts";
-    import { getUserById } from "../models/users";
+    import { getPostsByUserName } from "../models/posts";
     import Loading from "../lib/Loading.svelte";
     import PostsList from "../lib/PostsList.svelte";
-    import { currentPosts } from "../store";
+    import { currentPosts, loginInfo } from "../store";
     import { onMount } from "svelte";
     import { getModalContext } from "../lib/utils";
     import EditInfoForm from "../lib/forms/EditInfoForm.svelte";
@@ -13,7 +12,7 @@
     let loading = true;
     onMount(async () => {
         user = await getUserByUsername(params.username);
-        currentPosts.set(await getPostsByUserId(user._id));
+        currentPosts.set(await getPostsByUserName(user.username));
         loading = false;
     });
 
@@ -35,11 +34,13 @@
                     <div class="card-title mt-2">{user.nickname}</div>
                 </div>
             </div>
-            <button
-                class="btn btn-outline absolute right-4 top-4"
-                on:click={() => open(EditInfoForm, { user })}
-                >编辑个人资料</button
-            >
+            {#if user._id === $loginInfo.user._id}
+                <button
+                    class="btn btn-outline absolute right-4 top-4"
+                    on:click={() => open(EditInfoForm, { user })}
+                    >编辑个人资料</button
+                >
+            {/if}
             <div class="flex justify-center">
                 <PostsList posts={$currentPosts} />
             </div>

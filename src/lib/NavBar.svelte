@@ -7,7 +7,7 @@
 </script>
 
 <div
-    class="overflow-hidden dark:border-b-base-100 border-b relative w-full items-center justify-center dark:bg-neutral dark:text-neutral-content shadow-sm bg-base-100"
+    class="overflow-hidden dark:border-b-base-100 border-b items-center justify-center dark:bg-neutral dark:text-neutral-content shadow-sm bg-base-100"
 >
     <div class="flex justify-center">
         <a

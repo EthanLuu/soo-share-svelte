@@ -35,17 +35,19 @@
     }
 </script>
 
-<NavBar {tags} />
-<div class="container py-4 flex justify-center h-full relative">
-    {#if loading}
-        <Loading />
-    {:else}
-        <PostsList posts={$currentPosts} />
-    {/if}
-    <button
-        class="btn absolute bottom-4 right-4 stroke-current rounded-full bg-base-100 border p-2 w-12 h-12 shadow-sm"
-        on:click={() => open(CreatePostForm)}
-    >
-        <Icon height="20" width="20" name="write" />
-    </button>
+<div class="flex-1 relative flex flex-col">
+    <NavBar {tags} />
+    <div class="container py-4 flex justify-center h-full relative">
+        {#if loading}
+            <Loading />
+        {:else}
+            <PostsList posts={$currentPosts} />
+        {/if}
+        <button
+            class="btn btn-outline absolute bottom-4 right-4 stroke-current rounded-full bg-base-100 p-2 w-12 h-12 shadow-md border-base-200"
+            on:click={() => open(CreatePostForm)}
+        >
+            <Icon height="20" width="20" name="write" />
+        </button>
+    </div>
 </div>

@@ -47,8 +47,8 @@ export const addOnePost = async (post: Partial<Post>, user: User) => {
     return data as Post;
 };
 
-export const getPostsByUserId = async (userId: string) => {
-    const response = await fetch(`${host}/posts?userId=${userId}`);
+export const getPostsByUserName = async (userName: string) => {
+    const response = await fetch(`${host}/posts?userName=${userName}`);
     const posts = await response.json();
     return posts as Post[];
 };

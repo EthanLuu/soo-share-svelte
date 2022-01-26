@@ -37,7 +37,7 @@
                 !!like ? "fill-red-600" : "hover:text-red-600 stroke-current "
             }`}
         />
-        <span>{likeCount}</span>
+        <span class="w-8 text-ellipsis overflow-hidden">{likeCount}</span>
     </div>
     {#if post.link}
         <a

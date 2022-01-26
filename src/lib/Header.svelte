@@ -15,8 +15,7 @@
 </script>
 
 <header
-    class:shadow-sm={hash !== "#/"}
-    class="relative z-10 navbar dark:bg-neutral dark:text-neutral-content w-full dark:border-b-base-100 border-b pr-0"
+    class="shadow-sm relative z-10 navbar dark:bg-neutral dark:text-neutral-content w-full dark:border-b-base-100 border-b pr-0"
 >
     <div class="flex-1 px-2 mx-2 sm:flex-none hidden sm:block">
         <a href="#/">

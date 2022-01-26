@@ -4,6 +4,7 @@
 
     import { loginInfo, message } from "../../store";
     import { getModalContext } from "../utils";
+    import { getQiNiuToken, uploadImage } from "../../models/image";
 
     export let user: User;
     let username: string, nickname: string, avatar: string;
@@ -24,15 +25,25 @@
     };
 
     const { close } = getModalContext("modal");
+
+    let avatarFile: File;
+
+    const updateAvatar = (event: { target: any }) => {
+        avatarFile = (event.target as any).files[0];
+    };
+
     const handleSubmit = async () => {
         if (!isFormLegal()) return;
-        const data = await editUserInfo(user, {
-            nickname,
-            avatar
+        const avatarUrl = await uploadImage(avatarFile, (props) => {
+            console.log(props);
         });
-        if (data) {
+        const saveUser = await editUserInfo(user, {
+            nickname,
+            avatar: avatarUrl
+        });
+        if (saveUser) {
             message.success("修改成功");
-            loginInfo.login(data);
+            loginInfo.login(saveUser);
             close();
         }
     };
@@ -61,13 +72,13 @@
     />
 </div>
 <div class="form-control mt-6">
-    <label for="avatar" class="mb-4 font-semibold">头像图片地址</label>
+    <label for="avatar" class="mb-4 font-semibold">上传头像</label>
     <input
-        type="text"
+        type="file"
         name="avatar"
         id="avatar"
-        class="input input-bordered"
-        bind:value={avatar}
+        on:change={updateAvatar}
+        accept="image/png, image/jpeg"
     />
 </div>
 <div class="modal-action">

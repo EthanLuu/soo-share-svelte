@@ -65,3 +65,8 @@ export const getModalContext = (key: string) => {
 export const isEnter = (e: KeyboardEvent, fn: any) => {
     e.key === "Enter" && fn();
 };
+
+export const getTodayString = () => {
+    const today = new Date();
+    return `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDay()}`;
+};
