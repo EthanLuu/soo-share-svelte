@@ -17,14 +17,25 @@ export interface Post {
     likeInfo?: Like[];
 }
 
-export const getAllPosts = async () => {
-    const response = await fetch(`${host}/posts`);
+export const getAllPosts = async (skip?: number, limit?: number) => {
+    const fetchUrl = new URL(`${host}/posts`);
+    fetchUrl.searchParams.append("skip", String(skip || 0));
+    limit && fetchUrl.searchParams.append("limit", String(limit));
+    const response = await fetch(fetchUrl.toString());
     const data = await response.json();
     return data as Post[];
 };
 
-export const getPostsByTag = async (tag: string) => {
-    const response = await fetch(`${host}/posts?tag=${tag}`);
+export const getPostsByTag = async (
+    tag: string,
+    skip?: number,
+    limit?: number
+) => {
+    const fetchUrl = new URL(`${host}/posts`);
+    fetchUrl.searchParams.append("skip", String(skip || 0));
+    limit && fetchUrl.searchParams.append("limit", String(limit));
+    fetchUrl.searchParams.append("tag", tag);
+    const response = await fetch(fetchUrl.toString());
     const data = await response.json();
     return data as Post[];
 };
@@ -47,8 +58,16 @@ export const addOnePost = async (post: Partial<Post>, user: User) => {
     return data as Post;
 };
 
-export const getPostsByUserName = async (userName: string) => {
-    const response = await fetch(`${host}/posts?userName=${userName}`);
+export const getPostsByUserName = async (
+    userName: string,
+    skip?: number,
+    limit?: number
+) => {
+    const fetchUrl = new URL(`${host}/posts`);
+    fetchUrl.searchParams.append("skip", String(skip || 0));
+    limit && fetchUrl.searchParams.append("limit", String(limit));
+    fetchUrl.searchParams.append("userName", userName);
+    const response = await fetch(fetchUrl.toString());
     const posts = await response.json();
     return posts as Post[];
 };

@@ -17,11 +17,13 @@
                 <img
                     src={post.userInfo.avatar}
                     alt="avatar"
-                    class="h-12 w-12 rounded-full mr-3 object-cover"
+                    class="h-12 w-12 rounded-full mr-3 object-cover bg-white"
                 />
             </a>
             <div class="flex flex-col">
-                <span class="font-semibold">{post.userInfo.nickname}</span>
+                <a href="/#/user/{post.userName}" class="font-semibold">
+                    {post.userInfo.nickname}</a
+                >
                 <span>{time}</span>
             </div>
         </div>

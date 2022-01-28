@@ -1,17 +1,16 @@
 <script lang="ts">
     import { loginInfo } from "../store";
 
-    import { push } from "svelte-spa-router";
+    import { push, location, link } from "svelte-spa-router";
 
     import AvatarMenu from "./AvatarMenu.svelte";
     import SearchBar from "./SearchBar.svelte";
 
     const siteName = "🖖 Soo Share";
     const routes = [
-        { key: "home", hash: "#/", name: "首页" },
-        { key: "recommend", hash: "#/recommend", name: "推荐" }
+        { key: "home", hash: "/", name: "首页" },
+        { key: "recommend", hash: "/recommend", name: "推荐" }
     ];
-    let hash = window.location.hash;
 </script>
 
 <header
@@ -25,9 +24,9 @@
     <div class="flex-1 px-2 mx-2 items-stretch">
         {#each routes as route}
             <a
-                class:text-primary={route.hash === hash}
+                class:text-primary={route.hash === $location}
                 class="btn btn-ghost btn-md text-base rounded-none"
-                on:click={() => (hash = route.hash)}
+                use:link={route.hash}
                 href={route.hash}
             >
                 {route.name}

@@ -73,6 +73,8 @@ const createCurrentPosts = () => {
     const { set, subscribe } = posts;
 
     const add = (post: Post) => posts.update((oldPosts) => [post, ...oldPosts]);
+    const addMany = (newPosts: Post[]) =>
+        posts.update((oldPosts) => [...oldPosts, ...newPosts]);
     const remove = (id: string) =>
         posts.update((oldPosts) => oldPosts.filter((post) => post._id !== id));
     const edit = (post: Post) =>
@@ -80,10 +82,13 @@ const createCurrentPosts = () => {
             oldPosts[oldPosts.findIndex((p) => p._id === post._id)] = post;
             return oldPosts;
         });
+    const clear = () => posts.set([]);
 
     return {
         add,
+        addMany,
         remove,
+        clear,
         edit,
         subscribe,
         set

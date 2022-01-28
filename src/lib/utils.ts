@@ -20,9 +20,9 @@ export const parseTimeString = (date: string) => {
     if (hours > 23) {
         return format.format(old);
     } else if (hours >= 1) {
-        return `${Math.ceil(hours)}小时前`;
+        return `${Math.ceil(hours)} 小时前`;
     } else if (minutes >= 1) {
-        return `${Math.ceil(minutes)}分钟前`;
+        return `${Math.ceil(minutes)} 分钟前`;
     } else {
         return "刚刚";
     }
@@ -69,4 +69,8 @@ export const isEnter = (e: KeyboardEvent, fn: any) => {
 export const getTodayString = () => {
     const today = new Date();
     return `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDay()}`;
+};
+
+export const scrollToTop = () => {
+    document.body.scrollIntoView({ behavior: "smooth" });
 };

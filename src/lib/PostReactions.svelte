@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { checkLiked, countLikes, Like, toggleLike } from "../models/likes";
+    import { Like, toggleLike } from "../models/likes";
     import { onMount } from "svelte";
     import type { Post } from "../models/posts";
     import { loginInfo } from "../store";
@@ -48,7 +48,7 @@
             <div>
                 <Icon name="link" class="mr-1 stroke-current" height="14" />
             </div>
-            <span class="overflow-hidden text-ellipsis">{post.link}</span>
+            <span class="overflow-hidden text-ellipsis whitespace-nowrap">{post.link}</span>
         </a>
     {/if}
 </div>

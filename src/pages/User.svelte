@@ -5,20 +5,53 @@
     import PostsList from "../lib/PostsList.svelte";
     import { currentPosts, loginInfo } from "../store";
     import { onMount } from "svelte";
-    import { getModalContext } from "../lib/utils";
+    import { getModalContext, scrollToTop } from "../lib/utils";
     import EditInfoForm from "../lib/forms/EditInfoForm.svelte";
+    import Icon from "../lib/Icon.svelte";
     export let params: { username?: string } = {};
     let user: User;
     let loading = true;
+    const limit = 10;
+    let skip = 0;
+    let loadingNew = false;
+    let showBackToTop = false;
+    let stopLoading = false;
+
     onMount(async () => {
         user = await getUserByUsername(params.username);
-        currentPosts.set(await getPostsByUserName(user.username));
+        await updatePosts();
         loading = false;
     });
 
     const { open } = getModalContext("modal");
+
+    const updatePosts = async () => {
+        loadingNew = true;
+        let newPosts = await getPostsByUserName(user.username, skip, limit);
+        if (newPosts.length === 0) {
+            stopLoading = true;
+            return;
+        }
+        skip === 0
+            ? currentPosts.set(newPosts)
+            : currentPosts.addMany(newPosts);
+        loading = false;
+        skip += limit;
+        loadingNew = false;
+    };
+
+    const handleScroll = async () => {
+        if (loadingNew || stopLoading) {
+            return;
+        }
+        showBackToTop = window.scrollY > 64;
+        if (window.scrollY + screen.height >= document.body.clientHeight - 64) {
+            await updatePosts();
+        }
+    };
 </script>
 
+<svelte:window on:scroll={handleScroll} />
 <div>
     {#if loading}
         <Loading />
@@ -29,12 +62,16 @@
                     <div
                         class="avatar h-32 w-32 rounded-full overflow-hidden border-4"
                     >
-                        <img src={user.avatar} alt="avatar" />
+                        <img
+                            src={user.avatar}
+                            alt="avatar"
+                            class="object-cover bg-white"
+                        />
                     </div>
                     <div class="card-title mt-2">{user.nickname}</div>
                 </div>
             </div>
-            {#if user._id === $loginInfo.user._id}
+            {#if user._id === $loginInfo.user?._id}
                 <button
                     class="btn btn-outline absolute right-4 top-4"
                     on:click={() => open(EditInfoForm, { user })}
@@ -46,4 +83,13 @@
             </div>
         </div>
     {/if}
+    <div class="flex flex-col fixed bottom-8 right-8 ">
+        <button
+            class:opacity-0={!showBackToTop}
+            class="btn btn-outline stroke-current rounded-full p-2 w-12 h-12 shadow-md transition-opacity"
+            on:click={scrollToTop}
+        >
+            <Icon height="20" width="20" name="chevron-up" />
+        </button>
+    </div>
 </div>

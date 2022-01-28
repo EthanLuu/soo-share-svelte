@@ -32,10 +32,10 @@
 </script>
 
 <Header />
-<main class="flex-1">
+<main class="flex-1 flex">
     <Modal />
     <Message />
-    <div class="h-full bg-base-200 flex flex-col">
+    <div class="flex-1 bg-base-200 flex flex-col">
         <Router {routes} />
     </div>
 </main>
