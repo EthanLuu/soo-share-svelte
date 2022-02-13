@@ -24,7 +24,7 @@
     };
 </script>
 
-<div class="flex items-center justify-between flex-row-reverse">
+<div class="flex items-center justify-between flex-row-reverse flex-1">
     <div
         class="cursor-pointer flex items-center select-none"
         on:click={handleLike}
@@ -40,15 +40,19 @@
         <span class="w-8 text-ellipsis overflow-hidden">{likeCount}</span>
     </div>
     {#if post.link}
-        <a
-            href={post.link}
-            class="hover:text-primary flex items-center text-sm max-w-xs"
-            target="_blank"
-        >
-            <div>
-                <Icon name="link" class="mr-1 stroke-current" height="14" />
-            </div>
-            <span class="overflow-hidden text-ellipsis whitespace-nowrap">{post.link}</span>
-        </a>
+        <div>
+            <a
+                href={post.link}
+                class="hover:text-primary flex items-center text-sm max-w-sm"
+                target="_blank"
+            >
+                <div>
+                    <Icon name="link" class="mr-1 stroke-current" height="14" />
+                </div>
+                <span class="overflow-hidden text-ellipsis whitespace-nowrap"
+                    >{decodeURI(post.link)}</span
+                >
+            </a>
+        </div>
     {/if}
 </div>

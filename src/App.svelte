@@ -1,4 +1,5 @@
 <script>
+	import Search from './pages/Search.svelte';
     import Header from "./lib/Header.svelte";
     import Footer from "./lib/Footer.svelte";
     import Home from "./pages/Home.svelte";
@@ -20,6 +21,7 @@
         "/register": Register,
         "/login": Login,
         "/user/:username": User,
+        "/search/:searchKey": Search,
         "*": NotFound
     };
     createModalContext("modal", false);

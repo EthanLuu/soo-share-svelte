@@ -26,6 +26,15 @@ export const getAllPosts = async (skip?: number, limit?: number) => {
     return data as Post[];
 };
 
+export const getPostsBySearchKey = async (searchKey: string, skip?: number, limit?: number) => {
+    const fetchUrl = new URL(`${host}/posts/search/${searchKey}`);
+    fetchUrl.searchParams.append("skip", String(skip || 0));
+    limit && fetchUrl.searchParams.append("limit", String(limit));
+    const response = await fetch(fetchUrl.toString());
+    const data = await response.json();
+    return data as Post[];
+};
+
 export const getPostsByTag = async (
     tag: string,
     skip?: number,

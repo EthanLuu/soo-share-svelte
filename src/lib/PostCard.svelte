@@ -28,7 +28,7 @@
             </div>
         </div>
         <p>{post.content}</p>
-        <div class="mt-4">
+        <div class="mt-4 flex">
             <PostReactions {post} />
         </div>
     </div>
