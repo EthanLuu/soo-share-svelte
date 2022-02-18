@@ -1,9 +1,8 @@
 import { writable } from 'svelte/store';
 
+
 import type { Post } from "./models/posts";
-
 import type { User } from "./models/users";
-
 const createMessage = () => {
     const { subscribe, set } = writable({
         message: "",
@@ -36,7 +35,7 @@ const createLoginInfo = () => {
         isLogin: false
     });
 
-    const login = (user: User) => {
+    const login = async (user: User) => {
         localStorage.setItem(tokenId, user.token);
         set({
             user,
@@ -96,3 +95,45 @@ const createCurrentPosts = () => {
 };
 
 export const currentPosts = createCurrentPosts();
+
+const createSubscribeList = () => {
+    const list = writable(new Set<string>());
+    const { set, subscribe } = list;
+    const add = (userId: string) =>
+        list.update((oldList) => oldList.add(userId));
+    const remove = (userId: string) => {
+        list.update((oldList) => {
+            oldList.delete(userId);
+            return oldList;
+        });
+    };
+
+    return {
+        add,
+        remove,
+        set,
+        subscribe
+    };
+};
+export const subscribeList = createSubscribeList();
+
+const createBookMarkList = () => {
+    const list = writable(new Set<string>());
+    const { set, subscribe } = list;
+    const add = (postId: string) =>
+        list.update((oldList) => oldList.add(postId));
+    const remove = (postId: string) => {
+        list.update((oldList) => {
+            oldList.delete(postId);
+            return oldList;
+        });
+    };
+
+    return {
+        add,
+        remove,
+        set,
+        subscribe
+    };
+};
+export const bookmarkedList = createBookMarkList();

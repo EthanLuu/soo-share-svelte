@@ -26,7 +26,11 @@ export const getAllPosts = async (skip?: number, limit?: number) => {
     return data as Post[];
 };
 
-export const getPostsBySearchKey = async (searchKey: string, skip?: number, limit?: number) => {
+export const getPostsBySearchKey = async (
+    searchKey: string,
+    skip?: number,
+    limit?: number
+) => {
     const fetchUrl = new URL(`${host}/posts/search/${searchKey}`);
     fetchUrl.searchParams.append("skip", String(skip || 0));
     limit && fetchUrl.searchParams.append("limit", String(limit));
@@ -111,4 +115,48 @@ export const editPost = async (post: Post) => {
     });
     const data = await response.json();
     return data ? post : null;
+};
+
+export const getSubscribedPosts = async (
+    subscribeList: Set<string>,
+    skip: number,
+    limit: number
+) => {
+    const fetchUrl = new URL(`${host}/posts`);
+    fetchUrl.searchParams.append("skip", String(skip || 0));
+    limit && fetchUrl.searchParams.append("limit", String(limit));
+    const response = await fetch(fetchUrl.toString(), {
+        headers: {
+            "Content-Type": "application/json",
+            authorization: loginInfo.getToken()
+        },
+        method: "POST",
+        body: JSON.stringify({
+            subscribeList: [...subscribeList]
+        })
+    });
+    const posts = await response.json();
+    return posts as Post[] || [];
+};
+
+export const getBookmarkedPosts = async (
+    bookmarkedList: Set<string>,
+    skip: number,
+    limit: number
+) => {
+    const fetchUrl = new URL(`${host}/posts`);
+    fetchUrl.searchParams.append("skip", String(skip || 0));
+    limit && fetchUrl.searchParams.append("limit", String(limit));
+    const response = await fetch(fetchUrl.toString(), {
+        headers: {
+            "Content-Type": "application/json",
+            authorization: loginInfo.getToken()
+        },
+        method: "POST",
+        body: JSON.stringify({
+            bookmarkedList: [...bookmarkedList]
+        })
+    });
+    const posts = await response.json();
+    return posts as Post[] || [];
 };

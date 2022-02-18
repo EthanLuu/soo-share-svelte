@@ -9,7 +9,8 @@
     const siteName = "🖖 Soo Share";
     const routes = [
         { key: "home", hash: "/", name: "首页" },
-        { key: "recommend", hash: "/recommend", name: "推荐" }
+        { key: "subscribe", hash: "/subscribe", name: "关注" },
+        { key: "bookmark", hash: "/bookmark", name: "收藏" },
     ];
 </script>
 
