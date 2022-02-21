@@ -42,13 +42,17 @@ export const loginByToken = async () => {
     if (!token) {
         return null;
     }
-    const data = await fetch(`${host}/users/login`, {
-        method: "POST",
-        headers: {
-            authorization: token
-        }
-    });
-    return data ? data.json() : null;
+    try {
+        const data = await fetch(`${host}/users/login`, {
+            method: "POST",
+            headers: {
+                authorization: token
+            }
+        });
+        return data ? data.json() : null;
+    } catch (error) {
+        return null
+    }
 };
 
 const defaultAvatar =
