@@ -49,9 +49,10 @@ export const loginByToken = async () => {
                 authorization: token
             }
         });
+        if (!data.ok) return null;
         return data ? data.json() : null;
     } catch (error) {
-        return null
+        return null;
     }
 };
 
