@@ -1,24 +1,21 @@
 <script lang="ts">
-    import CreatePostForm from "../lib/forms/CreatePostForm.svelte";
     import PostsList from "../lib/PostsList.svelte";
     import { getPostsBySearchKey, Post } from "../models/posts";
     import Loading from "../lib/Loading.svelte";
     import { currentPosts } from "../store";
-    import { getModalContext, scrollToTop } from "../lib/utils";
-    import Icon from "../lib/Icon.svelte";
+    import BackToTopButton from "../lib/BackToTopButton.svelte";
+    import CreatePostButton from "../lib/CreatePostButton.svelte";
     export let params: { searchKey?: string } = {};
 
     let loading = true;
     const limit = 10;
     let skip = 0;
-    let loadingNew = false;
+    let loadingPosts = false;
     let stopLoading = true;
     let searchKey = params.searchKey;
 
-    const { open } = getModalContext("modal");
-
     const updatePosts = async (searchKey: string) => {
-        loadingNew = true;
+        loadingPosts = true;
         if (stopLoading) return;
         let newPosts: Post[];
         newPosts = await getPostsBySearchKey(searchKey, skip, limit);
@@ -32,7 +29,7 @@
             ? currentPosts.set(newPosts)
             : currentPosts.addMany(newPosts);
         skip += limit;
-        loadingNew = false;
+        loadingPosts = false;
     };
 
     $: {
@@ -46,7 +43,7 @@
 
     let showBackToTop = false;
     const handleScroll = async () => {
-        if (loadingNew || stopLoading) {
+        if (loadingPosts || stopLoading) {
             return;
         }
         showBackToTop = window.scrollY > 64;
@@ -68,20 +65,9 @@
             {/if}
         </div>
 
-        <div class="flex flex-col fixed bottom-8 right-8">
-            <button
-                class:opacity-0={!showBackToTop}
-                class="btn btn-outline stroke-current rounded-full p-2 w-12 h-12 shadow-md transition-opacity bg-base-100 border-base-300"
-                on:click={scrollToTop}
-            >
-                <Icon height="20" width="20" name="chevron-up" />
-            </button>
-            <button
-                class="mt-4 btn btn-outline stroke-current rounded-full p-2 w-12 h-12 shadow-md bg-base-100 border-base-300"
-                on:click={() => open(CreatePostForm)}
-            >
-                <Icon height="20" width="20" name="write" />
-            </button>
+        <div class="flex flex-col fixed bottom-8 right-8 ">
+            <BackToTopButton show={showBackToTop} />
+            <CreatePostButton />
         </div>
     </div>
 </div>

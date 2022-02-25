@@ -1,29 +1,30 @@
 <script lang="ts">
-    import { querystring } from "svelte-spa-router";
-
-    export let tags = [];
-
-    $: query = new URLSearchParams($querystring);
+    import { location, querystring, link } from "svelte-spa-router";
+    export let navs = [];
+    let activeKey = "";
+    $: {
+        const query = new URLSearchParams($querystring);
+        navs.forEach((nav) => {
+            if (query?.get("tag") === nav.key || $location === nav.href) {
+                activeKey = nav.key;
+                return;
+            }
+        });
+    }
 </script>
 
 <div
     class="overflow-hidden dark:border-b-base-100 border-b items-center justify-center dark:bg-neutral dark:text-neutral-content shadow-sm bg-base-100"
 >
     <div class="flex justify-center">
-        <a
-            href={`#/`}
-            class="btn btn-ghost btn-md text-base font-normal rounded-none"
-            class:text-primary={!query.has("tag")}
-        >
-            {"全部"}
-        </a>
-        {#each tags as tag}
+        {#each navs as nav}
             <a
-                href={`#/?tag=${tag.key}`}
+                use:link
+                href={nav.href}
                 class="btn btn-ghost btn-md text-base font-normal rounded-none"
-                class:text-primary={query.get("tag") === tag.key}
+                class:text-primary={activeKey === nav.key}
             >
-                {tag.name}
+                {nav.name}
             </a>
         {/each}
     </div>

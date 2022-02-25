@@ -5,15 +5,15 @@
     import PostsList from "../lib/PostsList.svelte";
     import { currentPosts, loginInfo } from "../store";
     import { onMount } from "svelte";
-    import { getModalContext, scrollToTop } from "../lib/utils";
+    import { getModalContext } from "../lib/utils";
     import EditInfoForm from "../lib/forms/EditInfoForm.svelte";
-    import Icon from "../lib/Icon.svelte";
+    import BackToTopButton from "../lib/BackToTopButton.svelte";
     export let params: { username?: string } = {};
     let user: User;
     let loading = true;
     const limit = 10;
     let skip = 0;
-    let loadingNew = false;
+    let loadingPosts = false;
     let showBackToTop = false;
     let stopLoading = false;
 
@@ -26,7 +26,7 @@
     const { open } = getModalContext("modal");
 
     const updatePosts = async () => {
-        loadingNew = true;
+        loadingPosts = true;
         let newPosts = await getPostsByUserName(user.username, skip, limit);
         if (newPosts.length === 0) {
             stopLoading = true;
@@ -37,11 +37,11 @@
             : currentPosts.addMany(newPosts);
         loading = false;
         skip += limit;
-        loadingNew = false;
+        loadingPosts = false;
     };
 
     const handleScroll = async () => {
-        if (loadingNew || stopLoading) {
+        if (loadingPosts || stopLoading) {
             return;
         }
         showBackToTop = window.scrollY > 64;
@@ -84,12 +84,6 @@
         </div>
     {/if}
     <div class="flex flex-col fixed bottom-8 right-8 ">
-        <button
-            class:opacity-0={!showBackToTop}
-            class="btn btn-outline stroke-current rounded-full p-2 w-12 h-12 shadow-md transition-opacity"
-            on:click={scrollToTop}
-        >
-            <Icon height="20" width="20" name="chevron-up" />
-        </button>
+        <BackToTopButton show={showBackToTop} />
     </div>
 </div>

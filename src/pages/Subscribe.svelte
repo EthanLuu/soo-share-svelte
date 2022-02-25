@@ -1,31 +1,19 @@
 <script lang="ts">
-    import CreatePostForm from "../lib/forms/CreatePostForm.svelte";
     import PostsList from "../lib/PostsList.svelte";
-    import { onDestroy, onMount } from "svelte";
-    import {
-        getAllPosts,
-        getPostsByTag,
-        Post,
-        getSubscribedPosts
-    } from "../models/posts";
+    import { Post, getSubscribedPosts } from "../models/posts";
     import Loading from "../lib/Loading.svelte";
-    import NavBar from "../lib/NavBar.svelte";
-    import { getAllTags, Tag } from "../models/tags";
-    import { querystring } from "svelte-spa-router";
     import { currentPosts, subscribeList } from "../store";
-    import { getModalContext, scrollToTop } from "../lib/utils";
-    import Icon from "../lib/Icon.svelte";
+    import BackToTopButton from "../lib/BackToTopButton.svelte";
+    import CreatePostButton from "../lib/CreatePostButton.svelte";
 
     let loading = true;
     const limit = 10;
     let skip = 0;
-    let loadingNew = false;
+    let loadingPosts = false;
     let stopLoading = true;
 
-    const { open } = getModalContext("modal");
-
     const updatePosts = async () => {
-        loadingNew = true;
+        loadingPosts = true;
         if (stopLoading) return;
         let newPosts: Post[];
         newPosts = await getSubscribedPosts($subscribeList, skip, limit);
@@ -38,7 +26,7 @@
             ? currentPosts.set(newPosts)
             : currentPosts.addMany(newPosts);
         skip += limit;
-        loadingNew = false;
+        loadingPosts = false;
     };
 
     $: {
@@ -51,7 +39,7 @@
 
     let showBackToTop = false;
     const handleScroll = async () => {
-        if (loadingNew || stopLoading) {
+        if (loadingPosts || stopLoading) {
             return;
         }
         showBackToTop = window.scrollY > 64;
@@ -70,19 +58,8 @@
             <PostsList posts={$currentPosts} />
         {/if}
         <div class="flex flex-col fixed bottom-8 right-8 ">
-            <button
-                class:opacity-0={!showBackToTop}
-                class="btn btn-outline stroke-current rounded-full p-2 w-12 h-12 shadow-md transition-opacity bg-base-100 border-base-300"
-                on:click={scrollToTop}
-            >
-                <Icon height="20" width="20" name="chevron-up" />
-            </button>
-            <button
-                class="mt-4 btn btn-outline stroke-current rounded-full p-2 w-12 h-12 shadow-md bg-base-100 border-base-300"
-                on:click={() => open(CreatePostForm)}
-            >
-                <Icon height="20" width="20" name="write" />
-            </button>
+            <BackToTopButton show={showBackToTop} />
+            <CreatePostButton />
         </div>
     </div>
 </div>

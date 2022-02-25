@@ -3,11 +3,7 @@
     import PostsList from "../lib/PostsList.svelte";
     import { Post, getBookmarkedPosts } from "../models/posts";
     import Loading from "../lib/Loading.svelte";
-    import {
-        bookmarkedList,
-        currentPosts,
-        loginInfo,
-    } from "../store";
+    import { bookmarkedList, currentPosts, loginInfo } from "../store";
     import { getModalContext, scrollToTop } from "../lib/utils";
     import Icon from "../lib/Icon.svelte";
     import { onMount } from "svelte";
@@ -21,7 +17,7 @@
 
     onMount(async () => {
         await updateBookmarkedList($loginInfo.user);
-    })
+    });
 
     const { open } = getModalContext("modal");
 

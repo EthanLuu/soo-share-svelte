@@ -19,6 +19,7 @@
     import { updateBookmarkedList } from "./models/bookmarks";
     import { updateSubscribeList } from "./models/subscribes";
     import Loading from "./lib/Loading.svelte";
+    import Management from "./pages/management/Index.svelte";
     const routes = {
         "/": Home,
         "/bookmark": Bookmark,
@@ -27,6 +28,7 @@
         "/login": Login,
         "/user/:username": User,
         "/search/:searchKey": Search,
+        "/management/:tabKey?": Management,
         "*": NotFound
     };
     let loading = true;

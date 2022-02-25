@@ -8,6 +8,7 @@ export interface User {
     nickname: string;
     avatar?: string;
     token?: string;
+    roleNumber: number;
 }
 
 export const getUserById = async (id: string) => {

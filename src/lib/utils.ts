@@ -2,6 +2,7 @@ import { getContext, setContext } from 'svelte';
 import { writable } from 'svelte/store';
 
 import type { Writable } from "svelte/store";
+import type { Tag } from '../models/tags';
 
 const format = new Intl.DateTimeFormat("zh-cn", {
     month: "long",
@@ -74,3 +75,13 @@ export const getTodayString = () => {
 export const scrollToTop = () => {
     document.body.scrollIntoView({ behavior: "smooth" });
 };
+
+export const getTagHref = (tag?: Tag) => {
+    const url = new URL(window.location.href);
+    if (tag.key) {
+        url.searchParams.set("tag", tag.key);
+    } else {
+        url.searchParams.delete("tag");
+    }
+    return url.origin + url.pathname + url.hash + url.search;
+}

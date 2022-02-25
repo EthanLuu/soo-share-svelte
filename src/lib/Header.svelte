@@ -8,9 +8,9 @@
 
     const siteName = "🖖 Soo Share";
     const routes = [
-        { key: "home", hash: "/", name: "首页" },
-        { key: "subscribe", hash: "/subscribe", name: "关注" },
-        { key: "bookmark", hash: "/bookmark", name: "收藏" },
+        { key: "home", hash: "/", name: "首页", needLogIn: false },
+        { key: "subscribe", hash: "/subscribe", name: "关注", needLogIn: true  },
+        { key: "bookmark", hash: "/bookmark", name: "收藏", needLogIn: true  },
     ];
 </script>
 
@@ -26,6 +26,7 @@
         {#each routes as route}
             <a
                 class:text-primary={route.hash === $location}
+                class:hidden={route.needLogIn && !$loginInfo.isLogin}
                 class="btn btn-ghost btn-md text-base rounded-none"
                 use:link={route.hash}
                 href={route.hash}
