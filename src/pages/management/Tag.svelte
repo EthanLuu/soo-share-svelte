@@ -1,9 +1,11 @@
-<script>
+<script lang="ts">
+    import type { ModalContext } from "../../lib/utils";
     import Table from "../../lib/Table.svelte";
-    import { onMount } from "svelte";
+    import { getContext, onMount } from "svelte";
     import { deleteTag, getAllTags } from "../../models/tags";
     import ConfirmButton from "../../lib/forms/ConfirmButton.svelte";
-
+    import AddTagForm from "../../lib/forms/AddTagForm.svelte";
+    const { open } = getContext("modal") as ModalContext;
     const columns = [
         {
             key: "key",
@@ -13,7 +15,7 @@
         },
         {
             key: "name",
-            title: "name",
+            title: "显示名称",
             value: (v) => v.name,
             sortable: true
         },
@@ -28,7 +30,8 @@
                     className: "btn-sm",
                     callback: deleteTag
                 }
-            }
+            },
+            class: "w-1/4"
         }
     ];
 
@@ -36,6 +39,15 @@
     onMount(async () => {
         rows = await getAllTags();
     });
+
+    const addTag = () => {
+        open(AddTagForm);
+    };
 </script>
 
-<Table {rows} {columns} />
+<div class="flex flex-col flex-1">
+    <div class="btn-group w-full justify-start">
+        <button class="btn btn-primary" on:click={addTag}>添加碎片</button>
+    </div>
+    <div class="flex-1"><Table {rows} {columns} /></div>
+</div>

@@ -14,12 +14,6 @@ export const checkLiked = (post: Post, user: User) => {
     return post.likeInfo.findIndex((l) => l.userId === user._id) >= 0;
 };
 
-export const countLikes = async (post: Post) => {
-    const response = await fetch(`${host}/likes?postId=${post._id}`);
-    const data = await response.json();
-    return data.length;
-};
-
 export const toggleLike = async (post: Post, user: User, like?: Like) => {
     let response: Response;
     if (!like) {

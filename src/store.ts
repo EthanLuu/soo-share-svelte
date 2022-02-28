@@ -1,6 +1,5 @@
 import { writable } from 'svelte/store';
 
-
 import type { Post } from "./models/posts";
 import type { User } from "./models/users";
 const createMessage = () => {
@@ -22,17 +21,21 @@ export const message = createMessage();
 
 export const tokenId = "soo-token";
 
+interface LoginInfo {
+    user: User;
+    token: string;
+    isLogin: boolean;
+    isAdmin: boolean;
+}
+
 const createLoginInfo = () => {
     const token = localStorage.getItem(tokenId);
 
-    const { set, subscribe } = writable<{
-        user: User;
-        token: string;
-        isLogin: boolean;
-    }>({
+    const { set, subscribe } = writable<LoginInfo>({
         user: null,
         token: token || "",
-        isLogin: false
+        isLogin: false,
+        isAdmin: false
     });
 
     const login = async (user: User) => {
@@ -40,7 +43,8 @@ const createLoginInfo = () => {
         set({
             user,
             isLogin: true,
-            token: user.token
+            token: user.token,
+            isAdmin: user.roleNumber === 9
         });
     };
 
@@ -49,7 +53,8 @@ const createLoginInfo = () => {
         set({
             user: null,
             isLogin: false,
-            token: ""
+            token: "",
+            isAdmin: false
         });
     };
 

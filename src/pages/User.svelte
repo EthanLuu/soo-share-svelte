@@ -18,6 +18,7 @@
     let stopLoading = false;
 
     onMount(async () => {
+        currentPosts.clear();
         user = await getUserByUsername(params.username);
         await updatePosts();
         loading = false;

@@ -34,12 +34,13 @@
 
     const handleSubmit = async () => {
         if (!isFormLegal()) return;
-        const avatarUrl = await uploadImage(avatarFile, (props) => {
-            console.log(props);
-        });
+        let avatar: string;
+        if (avatarFile) {
+            avatar = await uploadImage(avatarFile, () => {});
+        }
         const saveUser = await editUserInfo(user, {
             nickname,
-            avatar: avatarUrl
+            avatar
         });
         if (saveUser) {
             message.success("修改成功");

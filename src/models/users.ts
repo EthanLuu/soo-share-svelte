@@ -58,7 +58,7 @@ export const loginByToken = async () => {
 };
 
 const defaultAvatar =
-    "https://cdn.dribbble.com/users/49910/screenshots/4431133/attachments/1006784/avatar_04.png";
+    "https://cdn.ethanloo.cn/img/202202252012480.png";
 
 export const addOneUser = async (
     username: string,
@@ -78,6 +78,9 @@ export const addOneUser = async (
         },
         body: JSON.stringify(postData)
     });
+    if (!response.ok) {
+        return Promise.reject(await response.text());
+    }
     const data = await response.json();
     return data as User;
 };
@@ -92,5 +95,5 @@ export const editUserInfo = async (user: User, props: any) => {
         body: JSON.stringify(userInfo)
     });
     const data = await response.json();
-    return data as User;
+    return data;
 };

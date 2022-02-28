@@ -34,5 +34,7 @@
 
 <div class="flex-1 relative flex flex-col">
     <NavBar {navs} />
-    <svelte:component this={activeComponent} />
+    <div class="container flex justify-center items-center py-4">
+        <svelte:component this={activeComponent} />
+    </div>
 </div>

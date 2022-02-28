@@ -21,11 +21,17 @@
             tabindex="0"
             class="shadow menu dropdown-content bg-base-100 rounded-sm w-28 mt-3"
         >
-            <div
-                class="flex items-center px-4 py-2 font-bold"
-            >
+            <div class="flex items-center px-4 py-2 font-bold">
                 <span class="text-sm">{$loginInfo.user.nickname}</span>
             </div>
+            <a
+                class="flex items-center px-4 py-2 hover:bg-base-300 cursor-pointer"
+                href={`/#/management`}
+                class:hidden={$loginInfo.isAdmin}
+            >
+                <Icon name="collection" class="stroke-current mr-2" />
+                <span class="text-sm">后台管理</span>
+            </a>
             <a
                 class="flex items-center px-4 py-2 hover:bg-base-300 cursor-pointer"
                 href={`/#/user/${$loginInfo.user.username}`}

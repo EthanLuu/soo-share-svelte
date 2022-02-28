@@ -30,12 +30,16 @@
         if (!isFormLegal()) {
             return;
         }
-        const user = await addOneUser(username, password, nickname);
-        if (!user) {
-            message.error("注册失败");
-        } else {
-            loginInfo.login(user);
-            push("/");
+        try {
+            const user = await addOneUser(username, password, nickname);
+            if (!user) {
+                message.error("注册失败");
+            } else {
+                loginInfo.login(user);
+                push("/");
+            }
+        } catch (error) {
+            message.error(error)
         }
     };
 </script>
