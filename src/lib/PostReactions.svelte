@@ -40,7 +40,7 @@
 </script>
 
 
-<div class="flex items-center justify-between flex-row-reverse flex-1">
+<div class="flex items-center justify-between flex-row-reverse flex-1 overflow-hidden h-4">
     <div class="flex">
         <div
             title="收藏"
@@ -78,10 +78,9 @@
     </div>
 
     {#if post.link}
-        <div>
             <a
                 href={post.link}
-                class="hover:text-primary flex items-center text-sm max-w-sm"
+                class="hover:text-primary flex items-center text-sm max-w-sm overflow-hidden"
                 target="_blank"
             >
                 <div>
@@ -91,6 +90,5 @@
                     >{decodeURI(post.link)}</span
                 >
             </a>
-        </div>
     {/if}
 </div>

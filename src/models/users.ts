@@ -35,7 +35,7 @@ export const loginByPassword = async (username: string, password: string) => {
         return false;
     }
     const data = await response.json();
-    return data;
+    return data as User;
 };
 
 export const loginByToken = async () => {

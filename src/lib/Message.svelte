@@ -28,7 +28,7 @@
     });
 </script>
 
-{#if content && !hidden && type}
+{#if type && content && !type}
     <div
         in:fly={{ y: -5, duration: 200 }}
         out:fade
@@ -36,9 +36,9 @@
         class:alert-info={type === "info"}
         class:alert-warning={type === "warning"}
         class:alert-success={type === "success"}
-        class="bg-opacity-80 text-white alert top-4 fixed left-1/2 -translate-x-1/2 z-50 shadow-lg"
+        class=" w-auto bg-opacity-80 text-white alert top-4 fixed left-1/2 -translate-x-1/2 z-50 shadow-lg"
     >
-        <div class="flex-1">
+        <div>
             <Icon
                 name={type}
                 class="w-6 h-6 mx-2 stroke-current"

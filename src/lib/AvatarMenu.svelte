@@ -6,6 +6,7 @@
     import type { ModalContext } from "./utils";
     const { logout } = loginInfo;
     const { open } = getContext("modal") as ModalContext;
+    console.log($loginInfo.isAdmin);
 </script>
 
 <div>
@@ -27,7 +28,7 @@
             <a
                 class="flex items-center px-4 py-2 hover:bg-base-300 cursor-pointer"
                 href={`/#/management`}
-                class:hidden={$loginInfo.isAdmin}
+                class:hidden={!$loginInfo.isAdmin}
             >
                 <Icon name="collection" class="stroke-current mr-2" />
                 <span class="text-sm">后台管理</span>

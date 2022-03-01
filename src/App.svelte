@@ -48,7 +48,7 @@
 <main class="flex-1 flex">
     <Modal />
     <Message />
-    <div class="flex-1 bg-base-200 flex flex-col">
+    <div class="flex-1 bg-base-200 flex flex-col overflow-hidden">
         {#if loading}
             <Loading />
         {:else}
