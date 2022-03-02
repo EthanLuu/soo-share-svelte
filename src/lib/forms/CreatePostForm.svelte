@@ -36,7 +36,7 @@
     };
 </script>
 
-<div class="card-title">分享碎片</div>
+<div class="card-title mb-4">分享碎片</div>
 <div class="form-control relative">
     <textarea
         required

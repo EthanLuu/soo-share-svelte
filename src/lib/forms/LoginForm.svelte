@@ -26,6 +26,7 @@
         if (!user) {
             message.error("账户或密码错误");
         } else {
+            message.success("登录成功");
             loginInfo.login(user);
             push("/");
         }

@@ -58,7 +58,7 @@
         <Loading />
     {:else}
         <div class="container py-4 relative">
-            <div class="flex justify-around items-center">
+            <div class="flex justify-around items-center mt-4">
                 <div class="flex flex-col justify-center items-center">
                     <div
                         class="avatar h-32 w-32 rounded-full overflow-hidden border-4"

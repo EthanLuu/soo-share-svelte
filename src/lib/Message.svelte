@@ -28,7 +28,7 @@
     });
 </script>
 
-{#if type && content && !type}
+{#if type && content && !hidden}
     <div
         in:fly={{ y: -5, duration: 200 }}
         out:fade
