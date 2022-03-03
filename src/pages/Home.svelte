@@ -1,5 +1,5 @@
 <script lang="ts">
-    import PostsList from "../lib/PostsList.svelte";
+    import PostList from "../lib/PostList.svelte";
     import { onMount } from "svelte";
     import { getAllPosts, getPostsByTag, Post } from "../models/posts";
     import NavBar from "../lib/NavBar.svelte";
@@ -59,14 +59,21 @@
         updatePosts(params);
     }
 
+    let timer: NodeJS.Timeout;
     const handleScroll = async () => {
-        if (loadingPosts || stopLoading) {
-            return;
-        }
-        showBackToTop = window.scrollY > 64;
-        if (window.scrollY + screen.height >= document.body.clientHeight - 64) {
-            await updatePosts(params);
-        }
+        clearTimeout(timer);
+        timer = setTimeout(async () => {
+            if (loadingPosts || stopLoading) {
+                return;
+            }
+            showBackToTop = window.scrollY > 64;
+            if (
+                window.scrollY + screen.height >=
+                document.body.clientHeight - window.innerHeight
+            ) {
+                await updatePosts(params);
+            }
+        }, 100);
     };
 </script>
 
@@ -76,7 +83,7 @@
         <NavBar {navs} />
     {/if}
     <div class="container py-4 flex justify-center h-full relative">
-        <PostsList posts={$currentPosts} />
+        <PostList posts={$currentPosts} />
         <div class="flex flex-col fixed bottom-8 right-8 ">
             <BackToTopButton show={showBackToTop} />
             <CreatePostButton />

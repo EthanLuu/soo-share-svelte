@@ -1,5 +1,5 @@
 <script lang="ts">
-    import PostsList from "../lib/PostsList.svelte";
+    import PostList from "../lib/PostList.svelte";
     import { Post, getSubscribedPosts } from "../models/posts";
     import Loading from "../lib/Loading.svelte";
     import { currentPosts, subscribeList } from "../store";
@@ -55,7 +55,7 @@
         {#if loading}
             <Loading />
         {:else}
-            <PostsList posts={$currentPosts} />
+            <PostList posts={$currentPosts} />
         {/if}
         <div class="flex flex-col fixed bottom-8 right-8 ">
             <BackToTopButton show={showBackToTop} />

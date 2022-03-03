@@ -1,6 +1,6 @@
 <script lang="ts">
     import CreatePostForm from "../lib/forms/CreatePostForm.svelte";
-    import PostsList from "../lib/PostsList.svelte";
+    import PostList from "../lib/PostList.svelte";
     import { Post, getBookmarkedPosts } from "../models/posts";
     import Loading from "../lib/Loading.svelte";
     import { bookmarkedList, currentPosts, loginInfo } from "../store";
@@ -64,7 +64,7 @@
         {#if loading}
             <Loading />
         {:else}
-            <PostsList posts={$currentPosts} />
+            <PostList posts={$currentPosts} />
         {/if}
         <div class="flex flex-col fixed bottom-8 right-8 ">
             <button

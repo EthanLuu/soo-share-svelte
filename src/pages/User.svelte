@@ -2,7 +2,7 @@
     import { getUserByUsername, User } from "../models/users";
     import { getPostsByUserName } from "../models/posts";
     import Loading from "../lib/Loading.svelte";
-    import PostsList from "../lib/PostsList.svelte";
+    import PostList from "../lib/PostList.svelte";
     import { currentPosts, loginInfo } from "../store";
     import { onMount } from "svelte";
     import { getModalContext } from "../lib/utils";
@@ -58,7 +58,7 @@
         <Loading />
     {:else}
         <div class="container py-4 relative">
-            <div class="flex justify-around items-center mt-4">
+            <div class="flex justify-around items-center mb-4">
                 <div class="flex flex-col justify-center items-center">
                     <div
                         class="avatar h-32 w-32 rounded-full overflow-hidden border-4"
@@ -80,7 +80,7 @@
                 >
             {/if}
             <div class="flex justify-center">
-                <PostsList posts={$currentPosts} />
+                <PostList posts={$currentPosts} />
             </div>
         </div>
     {/if}

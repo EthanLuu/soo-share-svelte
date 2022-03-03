@@ -6,7 +6,6 @@
     import type { ModalContext } from "./utils";
     const { logout } = loginInfo;
     const { open } = getContext("modal") as ModalContext;
-    console.log($loginInfo.isAdmin);
 </script>
 
 <div>

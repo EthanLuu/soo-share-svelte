@@ -1,5 +1,5 @@
 <script lang="ts">
-    import PostsList from "../lib/PostsList.svelte";
+    import PostList from "../lib/PostList.svelte";
     import { getPostsBySearchKey, Post } from "../models/posts";
     import Loading from "../lib/Loading.svelte";
     import { currentPosts } from "../store";
@@ -61,7 +61,7 @@
             {#if loading}
                 <Loading />
             {:else}
-                <PostsList posts={$currentPosts} />
+                <PostList posts={$currentPosts} />
             {/if}
         </div>
 
