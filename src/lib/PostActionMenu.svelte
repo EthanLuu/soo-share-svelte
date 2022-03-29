@@ -29,7 +29,10 @@
     const handleReport = () => {
         modalContext.open(Confirm, {
             fn: async () => {
-                const data = await reportPostById(post._id);
+                const data = await reportPostById(
+                    post._id,
+                    $loginInfo.isLogin ? $loginInfo.user?._id : ""
+                );
                 if (data) {
                     message.success("举报成功");
                 }
@@ -51,7 +54,7 @@
         tabindex="0"
         class="shadow menu dropdown-content bg-base-100 w-20 border"
     >
-        {#if $loginInfo.user?._id === post?.userInfo._id}
+        {#if $loginInfo.user?._id === post?.userInfo?._id}
             <button
                 class="px-2 py-2 flex w-full items-center justify-around hover:bg-base-300"
                 on:click={handleEdit}

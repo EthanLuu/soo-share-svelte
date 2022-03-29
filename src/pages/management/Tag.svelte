@@ -47,7 +47,7 @@
 
 <div class="flex flex-col flex-1">
     <div class="btn-group w-full justify-start">
-        <button class="btn btn-primary" on:click={addTag}>添加碎片</button>
+        <button class="btn btn-primary" on:click={addTag}>添加标签</button>
     </div>
     <div class="flex-1"><Table {rows} {columns} /></div>
 </div>

@@ -1,5 +1,5 @@
-import { loginInfo } from '../store';
-import { host } from './configs';
+import { loginInfo } from "../store";
+import { host } from "./configs";
 
 import type { Like } from "./likes";
 
@@ -96,8 +96,20 @@ export const deletePostById = async (id: string) => {
     return data;
 };
 
-export const reportPostById = async (id: string) => {
-    return id;
+export const reportPostById = async (postId: string, userId: string) => {
+    const report: { postId: string; userId?: string } = { postId };
+    if (userId) {
+        report.userId = userId;
+    }
+    const response = await fetch(`${host}/reports`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(report)
+    });
+    const data = await response.json();
+    return data;
 };
 
 export const editPost = async (post: Post) => {
@@ -136,7 +148,7 @@ export const getSubscribedPosts = async (
         })
     });
     const posts = await response.json();
-    return posts as Post[] || [];
+    return (posts as Post[]) || [];
 };
 
 export const getBookmarkedPosts = async (
@@ -158,5 +170,5 @@ export const getBookmarkedPosts = async (
         })
     });
     const posts = await response.json();
-    return posts as Post[] || [];
+    return (posts as Post[]) || [];
 };

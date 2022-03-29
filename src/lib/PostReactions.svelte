@@ -11,8 +11,8 @@
     let likeCount = 0;
     $: bookmarked = $bookmarkedList.has(post._id);
     onMount(async () => {
-        likeCount = post.likeInfo.length;
-        if (!user) {
+        likeCount = post.likeInfo?.length;
+        if (!user || !post.likeInfo) {
             return;
         }
         like = post.likeInfo.find((l) => l.userId === user._id);
@@ -39,8 +39,9 @@
     };
 </script>
 
-
-<div class="flex items-center justify-between flex-row-reverse flex-1 overflow-hidden h-4">
+<div
+    class="flex items-center justify-between flex-row-reverse flex-1 overflow-hidden h-4"
+>
     <div class="flex">
         <div
             title="收藏"
@@ -58,37 +59,41 @@
                 }`}
             />
         </div>
-        <div
-            title="喜欢"
-            class="cursor-pointer flex items-center select-none"
-            on:click={handleLike}
-        >
-            <Icon
-                height="18"
-                width="18"
-                name="heart"
-                class={`cursor-pointer mr-2 ${
-                    !!like
-                        ? "fill-red-600"
-                        : "hover:text-red-600 stroke-current "
-                }`}
-            />
-            <span class="w-8 text-ellipsis overflow-hidden">{likeCount}</span>
-        </div>
+        {#if post.likeInfo}
+            <div
+                title="喜欢"
+                class="cursor-pointer flex items-center select-none"
+                on:click={handleLike}
+            >
+                <Icon
+                    height="18"
+                    width="18"
+                    name="heart"
+                    class={`cursor-pointer mr-2 ${
+                        !!like
+                            ? "fill-red-600"
+                            : "hover:text-red-600 stroke-current "
+                    }`}
+                />
+                <span class="w-8 text-ellipsis overflow-hidden"
+                    >{likeCount}</span
+                >
+            </div>
+        {/if}
     </div>
 
     {#if post.link}
-            <a
-                href={post.link}
-                class="hover:text-primary flex items-center text-sm max-w-sm overflow-hidden"
-                target="_blank"
+        <a
+            href={post.link}
+            class="hover:text-primary flex items-center text-sm max-w-sm overflow-hidden"
+            target="_blank"
+        >
+            <div>
+                <Icon name="link" class="mr-1 stroke-current" height="14" />
+            </div>
+            <span class="overflow-hidden text-ellipsis whitespace-nowrap"
+                >{decodeURI(post.link)}</span
             >
-                <div>
-                    <Icon name="link" class="mr-1 stroke-current" height="14" />
-                </div>
-                <span class="overflow-hidden text-ellipsis whitespace-nowrap"
-                    >{decodeURI(post.link)}</span
-                >
-            </a>
+        </a>
     {/if}
 </div>

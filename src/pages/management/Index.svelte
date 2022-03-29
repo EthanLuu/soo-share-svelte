@@ -2,6 +2,7 @@
     import NavBar from "../../lib/NavBar.svelte";
     import Tag from "./Tag.svelte";
     import Statistics from "./Statistics.svelte";
+    import Report from "./Report.svelte";
     export let params: { tabKey?: string } = {};
     let activeComponent = Statistics;
     const navs = [
@@ -20,7 +21,8 @@
         {
             key: "report",
             name: "举报管理",
-            href: "/management/report"
+            href: "/management/report",
+            component: Report
         }
     ];
     $: {

@@ -6,7 +6,7 @@
     import PostReactions from "./PostReactions.svelte";
     import PostActionMenu from "./PostActionMenu.svelte";
     export let post: Post;
-    $: subscribed = $subscribeList.has(post.userInfo._id);
+    $: subscribed = $subscribeList.has(post.userInfo?._id);
     const time = parseTimeString(post.date);
     let hovered = false;
 
@@ -21,21 +21,19 @@
     };
 </script>
 
-<div
-    class="card rounded-none border bg-base-100 flex overflow-visible"
->
+<div class="card rounded-none border bg-base-100 flex overflow-visible">
     <div class="card-body p-4 pb-2 flex justify-between w-full">
         <div class="mb-4 flex items-center">
             <a href="/#/user/{post.userName}">
                 <img
-                    src={post.userInfo.avatar}
+                    src={post.userInfo?.avatar}
                     alt="avatar"
                     class="h-12 w-12 rounded-full mr-3 object-cover bg-white"
                 />
             </a>
             <div class="flex flex-col">
                 <a href="/#/user/{post.userName}" class="font-semibold">
-                    {post.userInfo.nickname}</a
+                    {post.userInfo?.nickname}</a
                 >
                 <span>{time}</span>
             </div>
