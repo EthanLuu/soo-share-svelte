@@ -15,8 +15,8 @@
 
     const limit = 12;
     let skip = 0;
-    let loadingPosts = true;
-    let stopLoading = true;
+    let loadingPosts = false;
+    let stopLoading = false;
     let showBackToTop = false;
 
     onMount(async () => {
