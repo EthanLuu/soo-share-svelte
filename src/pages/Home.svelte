@@ -13,7 +13,7 @@
     let loadingNavs = true;
     let navs = [{ key: "", name: "全部", href: "/" }];
 
-    const limit = 10;
+    const limit = 12;
     let skip = 0;
     let loadingPosts = true;
     let stopLoading = true;
@@ -32,8 +32,8 @@
     });
 
     const updatePosts = async (params: URLSearchParams) => {
+        if (stopLoading || loadingPosts) return;
         loadingPosts = true;
-        if (stopLoading) return;
         let newPosts: Post[];
         if (params.has("tag")) {
             newPosts = await getPostsByTag(params.get("tag"), skip, limit);
