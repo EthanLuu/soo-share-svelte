@@ -34,6 +34,7 @@
     let loading = true;
     createModalContext("modal", false);
     onMount(async () => {
+        if ($loginInfo.isLogin) return;
         const user = await loginByToken();
         if (user) {
             loginInfo.login(user);

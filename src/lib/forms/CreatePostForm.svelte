@@ -31,6 +31,7 @@
         );
         if (data) {
             message.success("发布成功");
+            location.reload();
         }
         close();
     };

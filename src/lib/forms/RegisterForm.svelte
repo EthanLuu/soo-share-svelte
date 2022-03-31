@@ -1,4 +1,6 @@
 <script lang="ts">
+    import { sendCode } from "../../models/verification";
+
     import { push } from "svelte-spa-router";
 
     import { addOneUser } from "../../models/users";
@@ -8,7 +10,11 @@
     let username: string,
         password: string,
         repeatedPassword: string,
-        nickname: string;
+        nickname: string,
+        code: string,
+        codeSent: boolean,
+        leftSeconds: number,
+        email: string;
 
     const isFormLegal = () => {
         let legal = false;
@@ -26,12 +32,35 @@
         return legal;
     };
 
+    let countDownInterval: NodeJS.Timer;
+
+    const sendVerificationCode = async () => {
+        if (!email) {
+            message.error("请输入邮箱");
+        }
+        const ok = await sendCode(email);
+        if (ok) {
+            message.success("已发送验证码");
+            codeSent = true;
+            leftSeconds = 60;
+            countDownInterval = setInterval(() => {
+                leftSeconds -= 1;
+                if (leftSeconds === 0) {
+                    clearInterval(countDownInterval);
+                    codeSent = false;
+                }
+            }, 1000);
+        } else {
+            message.error("发送失败");
+        }
+    };
+
     const register = async () => {
         if (!isFormLegal()) {
             return;
         }
         try {
-            const user = await addOneUser(username, password, nickname);
+            const user = await addOneUser(username, password, nickname, email, code);
             if (!user) {
                 message.error("注册失败");
             } else {
@@ -39,7 +68,7 @@
                 push("/");
             }
         } catch (error) {
-            message.error(error)
+            message.error(error);
         }
     };
 </script>
@@ -63,6 +92,36 @@
         id="nickname"
         class="input input-bordered"
         bind:value={nickname}
+    />
+</div>
+<div class="form-control mt-6">
+    <label class="input-group w-full flex-1" for="email">
+        <input
+            required
+            type="text"
+            placeholder="邮箱"
+            name="email"
+            id="email"
+            class="input input-bordered flex-1"
+            bind:value={email}
+        />
+        {#if codeSent}
+            <button class="btn btn-disabled" on:click={sendVerificationCode}
+                >{leftSeconds}秒后重试</button
+            >
+        {:else}
+            <button class="btn" on:click={sendVerificationCode}>验证</button>
+        {/if}
+    </label>
+</div>
+<div class="form-control mt-6">
+    <input
+        type="text"
+        placeholder="验证码"
+        name="code"
+        id="code"
+        class="input input-bordered"
+        bind:value={code}
     />
 </div>
 <div class="form-control mt-6">

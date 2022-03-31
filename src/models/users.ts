@@ -1,5 +1,5 @@
-import { tokenId } from '../store';
-import { host } from './configs';
+import { tokenId } from "../store";
+import { host } from "./configs";
 
 export interface User {
     _id: string;
@@ -57,18 +57,21 @@ export const loginByToken = async () => {
     }
 };
 
-const defaultAvatar =
-    "https://cdn.ethanloo.cn/img/202202252012480.png";
+const defaultAvatar = "https://cdn.ethanloo.cn/img/202202252012480.png";
 
 export const addOneUser = async (
     username: string,
     password: string,
-    nickname: string
+    nickname: string,
+    email: string,
+    code: string
 ) => {
     const postData = {
         username,
         password,
         nickname,
+        email,
+        code,
         avatar: defaultAvatar
     };
     const response = await fetch(`${host}/users/register`, {
