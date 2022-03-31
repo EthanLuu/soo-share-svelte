@@ -51,7 +51,6 @@
             skip += limit;
             loadingPosts = false;
         } catch (error) {
-            console.log(error);
             stopLoading = true;
         }
     };

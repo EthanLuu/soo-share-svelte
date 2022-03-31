@@ -37,6 +37,13 @@
         }
         bookmarked = !bookmarked;
     };
+
+    let uri: string;
+    try {
+        uri = decodeURI(post.link);
+    } catch (error) {
+        uri = "";
+    }
 </script>
 
 <div
@@ -92,7 +99,7 @@
                 <Icon name="link" class="mr-1 stroke-current" height="14" />
             </div>
             <span class="overflow-hidden text-ellipsis whitespace-nowrap"
-                >{decodeURI(post.link)}</span
+                >{uri || post.link}</span
             >
         </a>
     {/if}
