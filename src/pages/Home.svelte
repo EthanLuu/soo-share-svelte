@@ -35,20 +35,25 @@
         if (stopLoading || loadingPosts) return;
         loadingPosts = true;
         let newPosts: Post[];
-        if (params.has("tag")) {
-            newPosts = await getPostsByTag(params.get("tag"), skip, limit);
-        } else {
-            newPosts = await getAllPosts(skip, limit);
-        }
-        if (newPosts.length === 0) {
+        try {
+            if (params.has("tag")) {
+                newPosts = await getPostsByTag(params.get("tag"), skip, limit);
+            } else {
+                newPosts = await getAllPosts(skip, limit);
+            }
+            if (newPosts.length === 0) {
+                stopLoading = true;
+                return;
+            }
+            skip === 0
+                ? currentPosts.set(newPosts)
+                : currentPosts.addMany(newPosts);
+            skip += limit;
+            loadingPosts = false;
+        } catch (error) {
+            console.log(error);
             stopLoading = true;
-            return;
         }
-        skip === 0
-            ? currentPosts.set(newPosts)
-            : currentPosts.addMany(newPosts);
-        skip += limit;
-        loadingPosts = false;
     };
 
     $: params = new URLSearchParams($querystring);
