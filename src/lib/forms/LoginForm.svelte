@@ -1,8 +1,6 @@
 <script lang="ts">
     import { push } from "svelte-spa-router";
-
     import { loginByPassword } from "../../models/users";
-
     import { message, loginInfo } from "../../store";
     import { isEnter } from "../utils";
     let username: string, password: string;

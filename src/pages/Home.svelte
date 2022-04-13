@@ -51,13 +51,14 @@
             skip += limit;
             loadingPosts = false;
         } catch (error) {
-            stopLoading = true;
+            console.log(error);
         }
     };
 
     $: params = new URLSearchParams($querystring);
     $: {
         stopLoading = false;
+        loadingPosts = false;
         currentPosts.clear();
         skip = 0;
         updatePosts(params);

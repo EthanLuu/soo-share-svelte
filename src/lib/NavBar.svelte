@@ -14,14 +14,14 @@
 </script>
 
 <div
-    class="overflow-hidden dark:border-b-base-100 border-b items-center justify-center dark:bg-neutral dark:text-neutral-content shadow-sm bg-base-100"
+    class="h-12 flex overflow-hidden dark:border-b-base-100 border-b items-center justify-center dark:bg-neutral dark:text-neutral-content shadow-sm bg-base-100"
 >
-    <div class="flex justify-center">
+    <div class="h-12 flex justify-center">
         {#each navs as nav}
             <a
                 use:link
                 href={nav.href}
-                class="btn btn-ghost btn-md text-base font-normal rounded-none"
+                class="h-12 btn btn-ghost btn-md text-base font-normal rounded-none"
                 class:text-primary={activeKey === nav.key}
             >
                 {nav.name}
