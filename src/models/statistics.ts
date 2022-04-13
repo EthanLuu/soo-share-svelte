@@ -14,6 +14,5 @@ export const getPostStatistics = async () => {
     for (let item of items) {
         map.set(item._id, item.count);
     }
-    console.log(map);
     return map;
 };
