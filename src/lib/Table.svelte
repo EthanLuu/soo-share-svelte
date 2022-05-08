@@ -4,8 +4,6 @@
     export let columns: any[];
 </script>
 
-<SvelteTable
-    {columns}
-    {rows}
-    classNameTable="table"
-/>
+<div class="table-bg border">
+    <SvelteTable {columns} {rows} classNameTable="table table-auto" classNameTbody="" classNameThead="text-md overflow-hidden"/>
+</div>

@@ -87,7 +87,7 @@
         </div>
 
         <div class="w-full bg-white border mt-4">
-            <Echart {option} id="echart" height={400} />
+            <Echart {option} id="echart" height={"50vh"} />
         </div>
     {/if}
 </div>

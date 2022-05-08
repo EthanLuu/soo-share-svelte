@@ -37,5 +37,5 @@
 </script>
 
 <div class="flex flex-col flex-1">
-    <div class="flex-1 report-table"><Table {rows} {columns} /></div>
+    <div class="flex-1 report-table mt-2"><Table {rows} {columns} /></div>
 </div>

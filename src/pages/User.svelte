@@ -8,6 +8,7 @@
     import { getModalContext } from "../lib/utils";
     import EditInfoForm from "../lib/forms/EditInfoForm.svelte";
     import BackToTopButton from "../lib/BackToTopButton.svelte";
+    import Icon from "../lib/Icon.svelte";
     export let params: { username?: string } = {};
     let user: User;
     let loading = true;
@@ -76,8 +77,10 @@
                 <button
                     class="btn btn-outline absolute right-4 top-4"
                     on:click={() => open(EditInfoForm, { user })}
-                    >编辑个人资料</button
                 >
+                    <span class="hidden md:block"> 编辑个人资料 </span>
+                    <Icon name="write" class="stroke-current md:ml-2 stroke-2"/>
+                </button>
             {/if}
             <div class="flex justify-center">
                 <PostList posts={$currentPosts} />
